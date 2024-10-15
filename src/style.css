@@ -1,0 +1,202 @@
+/* Definir colores principales */
+:root {
+    --main-bg-color: #F0F0F0;
+    --header-bg-color: #c70000;
+    --text-color: #000000;
+    --contrast-color: #442f2d;
+}
+
+/* Estilos generales */
+body {
+    background-color: var(--main-bg-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, a {
+    color: var(--contrast-color);
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Botones */
+button {
+    background-color: var(--contrast-color);
+    color: #FFF;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #003BB5;
+}
+
+/* Contenedores */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    background-color: var(--main-bg-color);
+    background-attachment: fixed;
+}
+
+/* Formularios */
+input, textarea {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--contrast-color);
+    outline: none;
+}
+
+/* Pie de página */
+footer {
+    background-color: var(--contrast-color);
+    color: #FFF;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Importar las fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Caveat:wght@400;700&display=swap');
+
+/* Estilos para los encabezados */
+h1 {
+    font-family: 'Indie Flower', cursive;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 3rem;
+}
+
+h2 {
+    font-family: 'Indie Flower', cursive;
+    font-size: 2.5rem;
+}
+
+h3, h4, p {
+    font-family: 'Caveat', cursive;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+h4 {
+    font-size: 1.8rem;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+header {
+    background-color: var(--header-bg-color); /* Color de fondo del encabezado */
+    color: #FFFFFF; /* Color del texto en el encabezado */
+    padding: 20px; /* Espaciado interno */
+    position: fixed; /* Fijo en la parte superior */
+    width: 100%; /* Ancho completo */
+    top: 0; /* Posición en la parte superior */
+    z-index: 1000; /* Asegurar que esté por encima de otros elementos */
+    display: flex; /* Usar flexbox para alinear los elementos */
+    justify-content: space-between; /* Alinear a los extremos (izquierda y derecha) */
+    align-items: center; /* Alinear verticalmente los elementos */
+}
+
+.navbar-brand-left, .navbar-brand-right {
+    flex: 1; /* Ocupan el mismo espacio */
+}
+
+.navbar-center {
+    flex: 2; /* El centro ocupa más espacio que los lados */
+    text-align: center; /* Centrar el contenido dentro del div */
+}
+
+/* Sidebar que empieza oculto */
+.sidebar {
+    height: 100%; /* Altura completa */
+    width: 0; /* Comienza con ancho 0 */
+    position: fixed; /* Fijo en la izquierda */
+    top: 0;
+    left: 0;
+    background-color: var(--main-bg-color); /* Fondo del sidebar */
+    overflow-x: hidden; /* Desbordamiento oculto */
+    transition: 0.3s; /* Suave animación */
+    padding-top: 60px; /* Espaciado interno en la parte superior */
+    z-index: 1001; /* Asegura que el sidebar esté por encima de otros elementos */
+}
+
+/* Contenido del sidebar */
+.sidebar a, .sidebar button {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    display: block;
+    transition: 0.3s;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    width: 200px; /* Ancho fijo */
+}
+
+.sidebar a:hover, .sidebar button:hover {
+    background-color: var(--contrast-color);
+    color: white;
+}
+
+/* Botón para cerrar el sidebar */
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 2rem;
+    margin-left: 50px;
+}
+
+/* Estilo para el botón o ícono que abre el sidebar */
+.openbtn {
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.openbtn:hover {
+    background-color: transparent;
+}
+
+/* Si el sidebar está activo (abierto) */
+.sidebar-active {
+    width: 250px; /* Ancho del sidebar abierto */
+}
