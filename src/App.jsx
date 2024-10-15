@@ -1,9 +1,13 @@
 import React, { Fragment } from "react";
+import { Cabecera } from "./componentes/cabecera";
+import '../src/style.css';
 
 export function App() {
+
     return (
         <Fragment>
-            <h1>Holaa</h1>
+            <Cabecera><h1> </h1></Cabecera>
+
         </Fragment>
     );
 }
