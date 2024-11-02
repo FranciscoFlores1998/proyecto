@@ -29,7 +29,7 @@ a:hover {
 
 /* Botones */
 button {
-    background-color: var(--contrast-color);
+    background-color: transparent;
     color: #FFF;
     border: none;
     padding: 10px 20px;
@@ -80,6 +80,7 @@ footer {
     text-align: center;
     padding: 20px;
 }
+
 /* Estilos para los encabezados */
 h1 {
     font-family: Arial, sans-serif;
@@ -111,6 +112,7 @@ p {
     line-height: 1.6;
 }
 
+/* Estilos del header */
 header {
     background-color: var(--header-bg-color); /* Color de fondo del encabezado */
     color: #FFFFFF; /* Color del texto en el encabezado */
@@ -131,4 +133,47 @@ header {
 .navbar-center {
     flex: 2; /* El centro ocupa más espacio que los lados */
     text-align: center; /* Centrar el contenido dentro del div */
+}
+
+/* Sidebar que empieza oculto */
+.sidebar {
+    height: 100%; /* Altura completa */
+    width: 0; /* Comienza con ancho 0 */
+    position: fixed; /* Fijo en la izquierda */
+    top: 0;
+    left: 0;
+    background-color: var(--header-bg-color); /* Fondo del sidebar */
+    overflow-x: hidden; /* Desbordamiento oculto */
+    transition: 0.5s; /* Suave animación */
+    padding-top: 100px; /* Espaciado interno en la parte superior */
+    z-index: 1001; /* Asegura que el sidebar esté por encima de otros elementos */
+}
+
+/* Si el sidebar está activo (abierto) */
+.sidebar-active {
+    width: 220px; /* Ancho del sidebar abierto */
+}
+
+/* Contenido del sidebar */
+.sidebar a {
+    padding: 20px 15px;
+    text-decoration: none;
+    font-size: 2.2rem;
+    color: var(--text-color);
+    display: block;
+    transition: 0.5s;
+}
+
+.sidebar a:hover {
+    background-color: var(--header-bg-color);
+    color: white;
+}
+
+/* Botón para cerrar el sidebar */
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 2rem;
+    margin-left: 50px;
 }
