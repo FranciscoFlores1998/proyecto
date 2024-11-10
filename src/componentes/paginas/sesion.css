@@ -1,0 +1,146 @@
+/* Fondo de página con degradado */
+.login-page {
+    background: linear-gradient(135deg, #10444d, #206e77, #f39240);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor principal del login */
+.login-container {
+    background: #ffffff33; /* Fondo blanco con transparencia */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+}
+
+/* Título y subtítulo */
+.login-title {
+    color: #ee9726;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.login-subtitle {
+    color: #000000;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+/* Mensaje de error */
+.error-message {
+    color: #ff4d4f;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Estilo para el contenedor de formulario flotante */
+.form-floating {
+    position: relative;
+    margin-bottom: 0rem;
+}
+
+/* Estilo para el input dentro del form-floating */
+.form-floating .form-control {
+    border: none;
+    outline: none;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem; /* Espaciado interno */
+    background: #ffffff33; /* Fondo transparente para que la etiqueta flote */
+    color: #10444d; /* Color del texto */
+}
+
+/* Estilo para la etiqueta que flota */
+.form-floating label {
+    position: absolute; /* Posiciona la etiqueta de manera absoluta */
+    top: 0.5rem; /* Posición superior */
+    left: 0.5rem; /* Posición izquierda */
+    transition: 0.2s ease all; /* Efecto de transición */
+    pointer-events: none; /* Evita que la etiqueta interfiera con la entrada */
+}
+
+/* Efecto cuando el input tiene contenido */
+.form-floating .form-control:focus ~ label,
+.form-floating .form-control:not(:placeholder-shown) ~ label {
+    top: -0.5rem; /* Eleva la etiqueta hacia arriba */
+    left: -0.5rem; /* Mantiene la etiqueta alineada a la izquierda */
+    font-size: 1rem; /* Reduce el tamaño de la fuente */
+    color: #000; /* Cambia el color de la etiqueta */
+}
+
+/* Efecto de enfoque en el input */
+.form-floating .form-control:focus {
+    border-color: #000000; /* Cambia el borde cuando se enfoca */
+    box-shadow: 0 0 0 0.2rem rgba(216, 151, 67, 0.719); /* Sombra de enfoque */
+}
+
+/* Grupo de entradas con iconos */
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 0.5rem;
+}
+
+.input-icon {
+    color: #ee9726;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.form-control {
+    border: none;
+    outline: none;
+    flex: 1;
+    background: transparent;
+    color: #10444d;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+}
+
+.form-check-input {
+    margin: 0 0.5rem 0 0; /* Espacio entre el checkbox y el label */
+    transform: translateY(0rem); /* Ajuste vertical si es necesario */
+}
+
+.form-check-label {
+    margin: 0; /* Asegura que no haya margen extra en el label */
+}
+
+/* Botones */
+.login-button, .register-button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    color: white;
+    margin-top: 0.5rem;
+}
+
+.login-button {
+    background-color: #10444d;
+}
+
+.login-button:hover {
+    background-color: #083238;
+}
+
+.register-button {
+    background-color: #f39240;
+}
+
+.register-button:hover {
+    background-color: #e58135;
+}
