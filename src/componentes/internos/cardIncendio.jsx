@@ -22,27 +22,27 @@ export function CardIncendio() {
 
                     <button
                         className="btn btn-primary btn-custom"
-                        onClick={() => handleNavigation("/peINCENDIO")}>
+                        onClick={() => handleNavigation("/peincendio")}>
                         10-0 Incendio Casa Habitación</button>
                     <button
                         className="btn btn-primary btn-custom"
-                        onClick={() => handleNavigation("/peINCENDIO")}>
+                        onClick={() => handleNavigation("/peincendio")}>
                         10-1 Incendio en Vehiculo</button>
                     <button
                         className="btn btn-primary btn-custom"
-                        onClick={() => handleNavigation("/peINCENDIO")}>
+                        onClick={() => handleNavigation("/peincendio")}>
                         10-2 Incendio Forestal</button>
                     <button
                         className="btn btn-primary btn-custom"
-                        onClick={() => handleNavigation("/peINCENDIO")}>
+                        onClick={() => handleNavigation("/peincendio")}>
                         10-7 Incendio Electrico</button>
                     <button
                         className="btn btn-primary btn-custom"
-                        onClick={() => handleNavigation("/peINCENDIO")}>
+                        onClick={() => handleNavigation("/peincendio")}>
                         10-10 Rebrote de Incendio</button>
                     <button
                         className="btn btn-primary btn-custom"
-                        onClick={() => handleNavigation("/peINCENDIO")}>
+                        onClick={() => handleNavigation("/peincendio")}>
                         10-15 Inflamación de ducto de Chimenea</button>
                 </div>
             </div>

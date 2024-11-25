@@ -17,6 +17,7 @@ import { Estadisticas } from "./componentes/paginas/estadistica";
 import { Login } from "./componentes/paginas/login";
 import { ProtectedRoute } from "./componentes/shade/ProtectedRoute";
 import { ParteEmergenciaIncendio } from "./componentes/formularios/parteEmegenciaIncendio";
+import { PerfilUsuario } from "./componentes/paginas/perfil";
 
 
 export function App() {
@@ -83,9 +84,14 @@ export function App() {
                         <Estadisticas></Estadisticas>
                     }></Route>
                 <Route
-                    path="/peINCENDIO"
+                    path="/peincendio"
                     element={
                         <ParteEmergenciaIncendio></ParteEmergenciaIncendio>
+                    }></Route>
+                <Route
+                    path="/perfil"
+                    element={
+                        <PerfilUsuario></PerfilUsuario>
                     }></Route>
             </Routes>
         </Fragment>

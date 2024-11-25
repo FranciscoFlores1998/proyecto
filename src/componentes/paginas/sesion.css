@@ -9,7 +9,8 @@
 
 /* Contenedor principal del login */
 .login-container {
-    background: #ffffff33; /* Fondo blanco con transparencia */
+    background: #ffffff33;
+    /* Fondo blanco con transparencia */
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     padding: 2rem;
@@ -49,33 +50,47 @@
 .form-floating .form-control {
     border: none;
     outline: none;
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem; /* Espaciado interno */
-    background: #ffffff33; /* Fondo transparente para que la etiqueta flote */
-    color: #10444d; /* Color del texto */
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    /* Espaciado interno */
+    background: #ffffff33;
+    /* Fondo transparente para que la etiqueta flote */
+    color: #10444d;
+    /* Color del texto */
 }
 
 /* Estilo para la etiqueta que flota */
 .form-floating label {
-    position: absolute; /* Posiciona la etiqueta de manera absoluta */
-    top: 0.5rem; /* Posición superior */
-    left: 0.5rem; /* Posición izquierda */
-    transition: 0.2s ease all; /* Efecto de transición */
-    pointer-events: none; /* Evita que la etiqueta interfiera con la entrada */
+    position: absolute;
+    /* Posiciona la etiqueta de manera absoluta */
+    top: 0.5rem;
+    /* Posición superior */
+    left: 0.5rem;
+    /* Posición izquierda */
+    transition: 0.2s ease all;
+    /* Efecto de transición */
+    pointer-events: none;
+    /* Evita que la etiqueta interfiera con la entrada */
 }
 
 /* Efecto cuando el input tiene contenido */
-.form-floating .form-control:focus ~ label,
-.form-floating .form-control:not(:placeholder-shown) ~ label {
-    top: -0.5rem; /* Eleva la etiqueta hacia arriba */
-    left: -0.5rem; /* Mantiene la etiqueta alineada a la izquierda */
-    font-size: 1rem; /* Reduce el tamaño de la fuente */
-    color: #000; /* Cambia el color de la etiqueta */
+.form-floating .form-control:focus~label,
+.form-floating .form-control:not(:placeholder-shown)~label {
+    top: -0.5rem;
+    /* Eleva la etiqueta hacia arriba */
+    left: -0.5rem;
+    /* Mantiene la etiqueta alineada a la izquierda */
+    font-size: 1rem;
+    /* Reduce el tamaño de la fuente */
+    color: #000;
+    /* Cambia el color de la etiqueta */
 }
 
 /* Efecto de enfoque en el input */
 .form-floating .form-control:focus {
-    border-color: #000000; /* Cambia el borde cuando se enfoca */
-    box-shadow: 0 0 0 0.2rem rgba(216, 151, 67, 0.719); /* Sombra de enfoque */
+    border-color: #000000;
+    /* Cambia el borde cuando se enfoca */
+    box-shadow: 0 0 0 0.2rem rgba(216, 151, 67, 0.719);
+    /* Sombra de enfoque */
 }
 
 /* Grupo de entradas con iconos */
@@ -108,16 +123,20 @@
 }
 
 .form-check-input {
-    margin: 0 0.5rem 0 0; /* Espacio entre el checkbox y el label */
-    transform: translateY(0rem); /* Ajuste vertical si es necesario */
+    margin: 0 0.5rem 0 0;
+    /* Espacio entre el checkbox y el label */
+    transform: translateY(0rem);
+    /* Ajuste vertical si es necesario */
 }
 
 .form-check-label {
-    margin: 0; /* Asegura que no haya margen extra en el label */
+    margin: 0;
+    /* Asegura que no haya margen extra en el label */
 }
 
 /* Botones */
-.login-button, .register-button {
+.login-button,
+.register-button {
     width: 100%;
     padding: 0.75rem;
     border: none;
@@ -143,4 +162,34 @@
 
 .register-button:hover {
     background-color: #e58135;
+}
+
+/*input perfil*/
+.input-container {
+    margin-bottom: 15px;
+}
+
+.input-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--primary-color);
+    /* Azul oscuro */
+}
+
+.input-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    /* Amarillo oro */
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.input-container input:focus {
+    border-color: var(--accent-color);
+    /* Rojo intenso */
+    outline: none;
+    box-shadow: 0 0 5px var(--accent-color);
 }

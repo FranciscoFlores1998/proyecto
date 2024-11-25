@@ -19,6 +19,8 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
                     <button className="sidebar-btn" onClick={() => handleNavigation("/asistencia", "Parte de Asistencia")}>Parte de Asistencia</button>
                     <button className="sidebar-btn" onClick={() => handleNavigation("/emergencia", "Parte de Emergencia")}>Parte de Emergencia</button>
                     <button className="sidebar-btn" onClick={() => handleNavigation("/estadistica", "Estadísticas")}>Estadísticas</button>
+                    <button className="sidebar-btn" onClick={() => handleNavigation("/perfil", "Perfil Usuario")}>Perfil</button>
+
                 </div>
             </div>
         </Fragment>

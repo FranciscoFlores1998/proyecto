@@ -8,17 +8,6 @@
     --header-bg-color-end: #f39240;
 }
 
-/* Estilos generales */
-/* Estilo para el header */
-header {
-    background: linear-gradient(135deg, var(--header-bg-color-start), var(--header-bg-color-middle), var(--header-bg-color-end));
-    min-height: 10vh; /* Ajusta la altura del header según lo necesario */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--text-color); /* Define el color del texto en el header */
-}
-
 /* Estilo para el body */
 body {
     background-color: var(--main-bg-color);
@@ -84,14 +73,6 @@ input, textarea {
 input:focus, textarea:focus {
     border-color: var(--contrast-color);
     outline: none;
-}
-
-/* Pie de página */
-footer {
-    background-color: var(--contrast-color);
-    color: #FFF;
-    text-align: center;
-    padding: 20px;
 }
 
 /* Estilos para los encabezados */
