@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import '../shade/shadeStyle.css'
 
 export function Cabecera({toggleSidebar, pageTitle}) {
 

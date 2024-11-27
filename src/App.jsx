@@ -6,16 +6,18 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import '../src/style.css';
 
 /*COMPONENTES: NAVEGADOR*/
-import { Cabecera } from "./componentes/cabecera";
-import { SidebarMenu } from "./componentes/sidebar";
+import { Cabecera } from "./componentes/shade/cabecera";
+import { SidebarMenu } from "./componentes/shade/sidebar";
 
 /*COMPONENTES: PAGINAS*/
 import { Home } from "./componentes/paginas/home";
 import { Emergencia } from "./componentes/paginas/emergencia";
 import { Asistencia } from "./componentes/paginas/asistencia";
 import { Estadisticas } from "./componentes/paginas/estadistica";
-import { Login } from "./componentes/login";
-import { ProtectedRoute } from "./componentes/ProtectedRoute";
+import { Login } from "./componentes/paginas/login";
+import { ProtectedRoute } from "./componentes/shade/ProtectedRoute";
+import { ParteEmergenciaIncendio } from "./componentes/formularios/parteEmegenciaIncendio";
+import { PerfilUsuario } from "./componentes/paginas/perfil";
 
 
 export function App() {
@@ -28,9 +30,7 @@ export function App() {
     // Función para alternar el estado del sidebar
     const toggleSidebar = () => {
         setSidebarOpen(!sidebarOpen);
-        if (!sidebarOpen) {
-            setTimeout(() => setSidebarOpen(false), 5000);
-        }
+
     };
 
     // Función para cambiar el título de la página
@@ -56,13 +56,13 @@ export function App() {
                 </>
             )}
             <Routes>
-                <Route path="/login" element={<Login onLogin={handleLogin} />} />
+                {/*<Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/" element={<Navigate to={isAuthenticated ? "/home" : "/login"} />} />
                 <Route path="/home" element={
                     <ProtectedRoute isAuthenticated={isAuthenticated}>
                         <Home />
                     </ProtectedRoute>
-                } />
+                } />*/}
                 <Route
                     path="/Home"
                     element={
@@ -82,6 +82,16 @@ export function App() {
                     path="/estadistica"
                     element={
                         <Estadisticas></Estadisticas>
+                    }></Route>
+                <Route
+                    path="/peincendio"
+                    element={
+                        <ParteEmergenciaIncendio></ParteEmergenciaIncendio>
+                    }></Route>
+                <Route
+                    path="/perfil"
+                    element={
+                        <PerfilUsuario></PerfilUsuario>
                     }></Route>
             </Routes>
         </Fragment>

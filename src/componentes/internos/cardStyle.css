@@ -1,0 +1,19 @@
+.card-custom {
+    height: auto;
+    width: 18rem;
+    margin: auto;
+}
+
+.card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    padding: 10px;
+    height: auto;
+}
+
+.btn-custom {
+    padding: 8px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+}

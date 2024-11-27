@@ -1,0 +1,123 @@
+
+
+/* Estilo para el header */
+header {
+    background: linear-gradient(135deg, var(--header-bg-color-start), var(--header-bg-color-middle), var(--header-bg-color-end));
+    min-height: 10vh; /* Ajusta la altura del header según lo necesario */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color); /* Define el color del texto en el header */
+}
+/* Estilos para los encabezados */
+h1 {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 3rem;
+}
+
+h2 {
+    font-family: Arial, sans-serif;
+    font-size: 2.5rem;
+}
+
+h3, h4, p {
+    font-family: Arial, sans-serif;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+h4 {
+    font-size: 1.8rem;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Estilos del header */
+header {
+    background-color: var(--header-bg-color); /* Color de fondo del encabezado */
+    color: #FFFFFF; /* Color del texto en el encabezado */
+    padding: 20px; /* Espaciado interno */
+    position: fixed; /* Fijo en la parte superior */
+    width: 100%; /* Ancho completo */
+    top: 0; /* Posición en la parte superior */
+    z-index: 1000; /* Asegurar que esté por encima de otros elementos */
+    display: flex; /* Usar flexbox para alinear los elementos */
+    justify-content: space-between; /* Alinear a los extremos (izquierda y derecha) */
+    align-items: center; /* Alinear verticalmente los elementos */
+}
+
+.navbar-brand-left, .navbar-brand-right {
+    flex: 1; /* Ocupan el mismo espacio */
+}
+
+.navbar-center {
+    flex: 2; /* El centro ocupa más espacio que los lados */
+    text-align: center; /* Centrar el contenido dentro del div */
+}
+.sidebar {
+    position: fixed;
+    top: 100px;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: linear-gradient(500deg, #114851, #206e77);
+    color: #000;
+    transition: left 0.3s ease;
+    z-index: 100;
+}
+
+.sidebar-active {
+    left: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #114851;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.sidebar-btn {
+    background-color: auto;
+    border: none;
+    color: #fff;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-btn:hover {
+    background-color: #555;
+}
+
+/* Pie de página */
+footer {
+    background-color: var(--contrast-color);
+    color: #FFF;
+    text-align: center;
+    padding: 20px;
+}

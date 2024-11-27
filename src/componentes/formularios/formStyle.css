@@ -1,0 +1,111 @@
+/* Colores principales */
+:root {
+    --bg-color: #f0f4f8;
+    --text-color: #333;
+    --primary-color: #10444d;
+    --secondary-color: #f39240;
+    --error-color: #ff4d4f;
+    --success-color: #4caf50;
+}
+
+/* Fondo de la página */
+body {
+    background-color: var(--bg-color);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.form-container {
+    max-width: 60vw;
+    margin: 1rem auto;
+    background: rgba(255, 255, 255, 0.533);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+/* Títulos y enunciados */
+h1, h2, .form-enunciado {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* Input y textarea */
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* Estilo de checkbox y radio buttons */
+.form-check, .form-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 0.5rem;
+    accent-color: var(--primary-color);
+}
+
+/* Botones Save y Delete */
+.button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: var(--text-color);
+}
+
+.button-save {
+    background-color: var(--success-color);
+}
+
+.button-save:hover {
+    background-color: #3ece5f;
+}
+
+.button-delete {
+    background-color: var(--error-color);
+}
+
+.button-delete:hover {
+    background-color: #cc0000;
+}
+
+/* Estilos para botones de opciones múltiples */
+.button-option {
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s ease;
+    margin: 0.25rem;
+}
+
+.button-option:hover {
+    background-color: #e58135;
+}
+
+.button-option.selected {
+    background-color: var(--success-color);
+}
