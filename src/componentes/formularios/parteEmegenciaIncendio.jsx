@@ -1,186 +1,304 @@
-
 import React, { Fragment, useState } from 'react';
 import '../formularios/formStyle.css'
 
 export function ParteEmergenciaIncendio() {
-    
-    // Estado para almacenar los valores de los campos de entrada
     const [formData, setFormData] = useState({
-        nombre: '',
-        email: '',
-        telefono: '',
-        comentarios: '',
-        descripcion: '',
-        categoria: '',
-        opciones: [],
-        checkbox: false,
+        claveEmergencia: [],
+        direccion: '',
+        cuadrante: '',
+        horaInicio: '',
+        horaFin: '',
+        fechaEmergencia: '',
+        oficialEmergencia: '',
+        naturaleza: [],
+        tipoNaturaleza: [],
+        instituciones: [{ nombreInstitucion: '', nombreACargo: '', tipoInstitucion: '', horaLlegada: '' }],
+        victimas: [{ nombreVictima: '', rutVictima: '', edad: '', descripcion: '' }],
+        moviles: []
     });
     const [error, setError] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [confirmSave, setConfirmSave] = useState(false);
 
-    // Función para actualizar el estado de cada campo
-    const handleChange = (e) => {
+    const handleChange = (e, index, section) => {
         const { name, value, type, checked } = e.target;
-        setFormData((prevData) => ({
+        if (section) {
+            setFormData(prevData => ({
+                ...prevData,
+                [section]: prevData[section].map((item, i) =>
+                    i === index ? { ...item, [name]: type === 'checkbox' ? checked : value } : item
+                )
+            }));
+        } else {
+            setFormData(prevData => ({
+                ...prevData,
+                [name]: type === 'checkbox' ? checked : value,
+            }));
+        }
+    };
+
+    const handleListChange = (name, value) => {
+        setFormData(prevData => ({
             ...prevData,
-            [name]: type === 'checkbox' ? checked : value,
+            [name]: prevData[name].includes(value)
+                ? prevData[name].filter(item => item !== value)
+                : [...prevData[name], value]
         }));
     };
 
-    // Contar cuántos campos están completos
-    const camposCompletados = Object.values(formData).filter((field) => {
-        if (typeof field === 'string') return field.trim() !== '';
-        if (Array.isArray(field)) return field.length > 0;
-        return field;
-    }).length;
-
-    // Manejar opciones múltiples
-    const handleOptionClick = (opcion) => {
-        setFormData((prevData) => ({
+    const addSection = (section) => {
+        setFormData(prevData => ({
             ...prevData,
-            opciones: prevData.opciones.includes(opcion)
-                ? prevData.opciones.filter((o) => o !== opcion)
-                : [...prevData.opciones, opcion],
+            [section]: [...prevData[section], section === 'instituciones'
+                ? { nombreInstitucion: '', nombreACargo: '', tipoInstitucion: '', horaLlegada: '' }
+                : { nombreVictima: '', rutVictima: '', edad: '', descripcion: '' }
+            ]
         }));
     };
 
-    // Guardar y eliminar
     const handleSave = () => {
-        if (!formData.nombre) {
-            setError('El campo nombre es obligatorio');
+        if (!formData.direccion) {
+            setError('El campo dirección es obligatorio');
             return;
         }
         setError('');
         console.log('Data guardada:', formData);
     };
 
-    const handleDelete = () => {
-        console.log('Data eliminada');
-        setFormData({
-            nombre: '',
-            email: '',
-            telefono: '',
-            comentarios: '',
-            descripcion: '',
-            categoria: '',
-            opciones: [],
-            checkbox: false,
-        });
+    const handleConfirmSave = () => {
+        if (confirmSave) {
+            console.log('Data guardada:', formData);
+            setShowModal(false);
+            setConfirmSave(false);
+        } else {
+            setError('Por favor, confirme que desea guardar los datos');
+        }
     };
 
+    const handleMovilToggle = (movil) => {
+        setFormData(prevData => ({
+            ...prevData,
+            moviles: prevData.moviles.includes(movil)
+                ? prevData.moviles.filter(m => m !== movil)
+                : [...prevData.moviles, movil]
+        }));
+    };
     return (
-        <Fragment>
+        <div className="form-container">
+
             <div className="form-container">
-                <h1>Formulario Combinado</h1>
-                <p className="form-enunciado">
-                    Completa los campos requeridos: <span className="completed-counter">{camposCompletados} / 8</span>
-                </p>
-
-                {/* Campos del formulario de contacto */}
-                <div className="form-floating">
+                <h2>Información General</h2>
+                <div className="form-group">
+                    <label htmlFor="claveEmergencia">Clave Emergencia</label>
+                    <select
+                        id="claveEmergencia"
+                        value={formData.claveEmergencia}
+                        onChange={(e) => handleListChange('claveEmergencia', e.target.value)}
+                    >
+                        <option value="">Seleccione clave</option>
+                        <option value="clave1">Clave 1</option>
+                        <option value="clave2">Clave 2</option>
+                        <option value="clave3">Clave 3</option>
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="direccion">Dirección</label>
                     <input
-                        type="text"
-                        name="nombre"
-                        placeholder="Nombre"
-                        value={formData.nombre}
+                        id="direccion"
+                        name="direccion"
+                        value={formData.direccion}
                         onChange={handleChange}
-                        className="form-control"
                     />
-                    <label htmlFor="nombre">Nombre</label>
                 </div>
-                {error && <p className="error-message">{error}</p>}
-
-                <div className="form-floating">
+                <div className="form-group">
+                    <label htmlFor="cuadrante">Cuadrante</label>
                     <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={formData.email}
+                        id="cuadrante"
+                        name="cuadrante"
+                        value={formData.cuadrante}
                         onChange={handleChange}
-                        className="form-control"
                     />
-                    <label htmlFor="email">Email</label>
                 </div>
-
-                <div className="form-floating">
+                <div className="form-group">
+                    <label htmlFor="horaInicio">Hora Inicio</label>
                     <input
-                        type="tel"
-                        name="telefono"
-                        placeholder="Teléfono"
-                        value={formData.telefono}
+                        id="horaInicio"
+                        name="horaInicio"
+                        type="time"
+                        value={formData.horaInicio}
                         onChange={handleChange}
-                        className="form-control"
                     />
-                    <label htmlFor="telefono">Teléfono</label>
                 </div>
-
-                <div className="form-floating">
-                    <textarea
-                        name="comentarios"
-                        placeholder="Comentarios"
-                        value={formData.comentarios}
-                        onChange={handleChange}
-                        className="form-control"
-                    ></textarea>
-                    <label htmlFor="comentarios">Comentarios</label>
-                </div>
-
-                {/* Campos adicionales para el formulario de emergencia */}
-                <label>Descripción:</label>
-                <textarea
-                    name="descripcion"
-                    value={formData.descripcion}
-                    onChange={handleChange}
-                    className="form-control"
-                    placeholder="Escribe una descripción"
-                ></textarea>
-
-                <label>Categoría:</label>
-                <select
-                    name="categoria"
-                    value={formData.categoria}
-                    onChange={handleChange}
-                    className="form-control"
-                >
-                    <option value="">Seleccione una categoría</option>
-                    <option value="categoria1">Categoría 1</option>
-                    <option value="categoria2">Categoría 2</option>
-                </select>
-
-                <div className="form-check">
+                <div className="form-group">
+                    <label htmlFor="horaFin">Hora Fin</label>
                     <input
-                        type="checkbox"
-                        name="checkbox"
-                        checked={formData.checkbox}
+                        id="horaFin"
+                        name="horaFin"
+                        type="time"
+                        value={formData.horaFin}
                         onChange={handleChange}
-                        className="form-check-input"
                     />
-                    <label className="form-check-label">Acepto los términos y condiciones</label>
                 </div>
+                <div className="form-group">
+                    <label htmlFor="fechaEmergencia">Fecha Emergencia</label>
+                    <input
+                        id="fechaEmergencia"
+                        name="fechaEmergencia"
+                        type="date"
+                        value={formData.fechaEmergencia}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="oficialEmergencia">Oficial Emergencia</label>
+                    <input
+                        id="oficialEmergencia"
+                        name="oficialEmergencia"
+                        value={formData.oficialEmergencia}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="naturaleza">Naturaleza</label>
+                    <select
+                        id="naturaleza"
+                        value={formData.naturaleza}
+                        onChange={(e) => handleListChange('naturaleza', e.target.value)}
+                    >
+                        <option value="">Seleccione naturaleza</option>
+                        <option value="naturaleza1">Naturaleza 1</option>
+                        <option value="naturaleza2">Naturaleza 2</option>
+                        <option value="naturaleza3">Naturaleza 3</option>
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="tipoNaturaleza">Tipo Naturaleza</label>
+                    <select
+                        id="tipoNaturaleza"
+                        value={formData.tipoNaturaleza}
+                        onChange={(e) => handleListChange('tipoNaturaleza', e.target.value)}
+                    >
+                        <option value="">Seleccione tipo de naturaleza</option>
+                        <option value="tipo1">Tipo 1</option>
+                        <option value="tipo2">Tipo 2</option>
+                        <option value="tipo3">Tipo 3</option>
+                    </select>
+                </div>
+            </div>
 
-                <p className="form-enunciado">Seleccione opciones múltiples:</p>
-                <div className="button-option-group">
-                    {['Opción A', 'Opción B', 'Opción C'].map((opcion) => (
-                        <button
-                            key={opcion}
-                            type="button"
-                            className={`button-option ${formData.opciones.includes(opcion) ? 'selected' : ''}`}
-                            onClick={() => handleOptionClick(opcion)}
+            <div className="form-container">
+                <h2>Instituciones asistentes</h2>
+                {formData.instituciones.map((institucion, index) => (
+                    <div key={index} className="form-group">
+                        <input
+                            name="nombreInstitucion"
+                            placeholder="Nombre Institución"
+                            value={institucion.nombreInstitucion}
+                            onChange={(e) => handleChange(e, index, 'instituciones')}
+                        />
+                        <input
+                            name="nombreACargo"
+                            placeholder="Nombre a Cargo"
+                            value={institucion.nombreACargo}
+                            onChange={(e) => handleChange(e, index, 'instituciones')}
+                        />
+                        <select
+                            name="tipoInstitucion"
+                            value={institucion.tipoInstitucion}
+                            onChange={(e) => handleChange(e, index, 'instituciones')}
                         >
-                            {opcion}
+                            <option value="">Tipo de Institución</option>
+                            <option value="tipo1">Tipo 1</option>
+                            <option value="tipo2">Tipo 2</option>
+                            <option value="tipo3">Tipo 3</option>
+                        </select>
+                        <input
+                            name="horaLlegada"
+                            type="time"
+                            placeholder="Hora de Llegada"
+                            value={institucion.horaLlegada}
+                            onChange={(e) => handleChange(e, index, 'instituciones')}
+                        />
+                    </div>
+                ))}
+                <button className='button-option' onClick={() => addSection('instituciones')}>Agregar Institución</button>
+            </div>
+
+            <div className="form-container">
+                <h2>Víctimas</h2>
+                {formData.victimas.map((victima, index) => (
+                    <div key={index} className="form-group">
+                        <input
+                            name="nombreVictima"
+                            placeholder="Nombre Víctima"
+                            value={victima.nombreVictima}
+                            onChange={(e) => handleChange(e, index, 'victimas')}
+                        />
+                        <input
+                            name="rutVictima"
+                            placeholder="RUT Víctima"
+                            value={victima.rutVictima}
+                            onChange={(e) => handleChange(e, index, 'victimas')}
+                        />
+                        <input
+                            name="edad"
+                            type="number"
+                            placeholder="Edad"
+                            value={victima.edad}
+                            onChange={(e) => handleChange(e, index, 'victimas')}
+                        />
+                        <textarea
+                            name="descripcion"
+                            placeholder="Descripción"
+                            value={victima.descripcion}
+                            onChange={(e) => handleChange(e, index, 'victimas')}
+                        ></textarea>
+                    </div>
+                ))}
+                <button className='button-option' onClick={() => addSection('victimas')}>Agregar Víctima</button>
+            </div>
+
+            <div className="form-container">
+                <h2>MOVILES asistentes</h2>
+                <div className="button-option-group">
+                    {['Movil1', 'Movil2', 'Movil3'].map((movil) => (
+                        <button
+                            key={movil}
+                            type="button"
+                            className={`button-option ${formData.moviles.includes(movil) ? 'active' : ''}`}
+                            onClick={() => handleMovilToggle(movil)}
+                        >
+                            {movil}
                         </button>
                     ))}
                 </div>
-
-                {/* Botones de acción */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
-                    <button className="button button-save" onClick={handleSave}>
-                        Save
-                    </button>
-                    <button className="button button-delete" onClick={handleDelete}>
-                        Delete
-                    </button>
-                </div>
             </div>
-        </Fragment>
+
+            {error && <p className="error-message">{error}</p>}
+
+            <div className="button-group">
+                <button className="button button-save" onClick={handleSave}>Guardar</button>
+            </div>
+            {showModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Confirmar Guardado</h2>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={confirmSave}
+                                onChange={(e) => setConfirmSave(e.target.checked)}
+                            />
+                            Confirmo que deseo guardar los datos
+                        </label>
+                        <div className="modal-buttons">
+                            <button onClick={handleConfirmSave}>Guardar</button>
+                            <button onClick={() => setShowModal(false)}>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 }
+

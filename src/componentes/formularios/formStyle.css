@@ -18,9 +18,9 @@ body {
 
 /* Contenedor principal */
 .form-container {
-    max-width: 75vw;
-    margin: 2rem auto;
-    background: #fff;
+    max-width: 60vw;
+    margin: 1rem auto;
+    background: rgba(255, 255, 255, 0.533);
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 2rem;
@@ -107,5 +107,5 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 .button-option.selected {
-    background-color: var(--primary-color);
+    background-color: var(--success-color);
 }
