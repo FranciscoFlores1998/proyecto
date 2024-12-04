@@ -1,22 +1,49 @@
 import React, { Fragment } from "react";
-import '../internos/cardStyle.css'
-
+import { useNavigate } from "react-router-dom";
+import "../internos/cardStyle.css";
 
 export function CardRescate() {
-    return (
-        <Fragment>
-            <div className="card card-custom">
-                <img src="https://picsum.photos/200" className="card-img" alt="..." />
-                <div className="card-body">
-                    <h2 className="card-title" >Rescates</h2>
-                </div>
-                <div className="card-footer" >
-                    <a href="#" className="btn btn-primary btn-custom">10-3</a>
-                    <a href="#" className="btn btn-primary btn-custom">10-4</a>
-                    <a href="#" className="btn btn-primary btn-custom">10-14</a>
-                    <a href="#" className="btn btn-primary btn-custom">10-16</a>
-                </div>
-            </div>
-        </Fragment>
-    );
+  const navigate = useNavigate();
+
+  const handleNavigation = (path, cod) => {
+    navigate(path, { state: { claveEmergencia: cod } });
+  };
+  return (
+    <Fragment>
+      <div className="card card-custom">
+        <img src="https://picsum.photos/200" className="card-img" alt="..." />
+        <div className="card-body">
+          <h2 className="card-title">Rescates</h2>
+        </div>
+        <div className="card-footer">
+          <div className="card-footer">
+            <button
+              className="btn btn-primary btn-custom"
+              onClick={() => handleNavigation("/perescate", "10-3")}
+            >
+              10-3 Rescate de persona
+            </button>
+            <button
+              className="btn btn-primary btn-custom"
+              onClick={() => handleNavigation("/perescate", "10-4")}
+            >
+              10-4 Rescate vehícular
+            </button>
+            <button
+              className="btn btn-primary btn-custom"
+              onClick={() => handleNavigation("/perescate", "10-14")}
+            >
+              10-14 Llamado accidentes aéreos
+            </button>
+            <button
+              className="btn btn-primary btn-custom"
+              onClick={() => handleNavigation("/perescate", "10-16")}
+            >
+              10-16 Rescate animal
+            </button>
+          </div>
+        </div>
+      </div>
+    </Fragment>
+  );
 }

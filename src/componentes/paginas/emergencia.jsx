@@ -10,19 +10,19 @@ export function Emergencia() {
             <div className="container text-center">
                 <div className="row ">
                     <div className="col-12 col-md-3">
-                        {/*INCENDIO  ACCIDENTE*/}
+                        {/*INCENDIO*/}
                         <CardIncendio></CardIncendio>
                     </div>
                     <div className="col-12 col-md-3">
-                        {/*MAT-PEL  OTROS-SERVICIOS*/}
+                        {/*MATATERIALES-PELIGROSOS*/}
                         <CardMatPel></CardMatPel>
                     </div>
                     <div className="col-12 col-md-3">
-                        {/*MAT-PEL  OTROS-SERVICIOS*/}
+                        {/*RESCATES*/}
                         <CardRescate></CardRescate>
                     </div>
                     <div className="col-12 col-md-3">
-                        {/*MAT-PEL  OTROS-SERVICIOS*/}
+                        {/*OTROS-SERVICIOS*/}
                         <CardOtros></CardOtros>
                     </div>
                 </div>

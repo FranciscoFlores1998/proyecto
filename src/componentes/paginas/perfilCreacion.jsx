@@ -104,10 +104,6 @@ export function PerfilUsuario() {
                     />
                 </div>
 
-                
-
-                
-
                 <div className="input-container">
                     <label htmlFor="fechaIngreso">Fecha de Ingreso</label>
                     <input

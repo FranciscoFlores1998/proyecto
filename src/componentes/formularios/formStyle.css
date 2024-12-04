@@ -18,7 +18,7 @@ body {
 
 /* Contenedor principal */
 .form-container {
-    max-width: 60vw;
+    max-width: 80vw;
     margin: 1rem auto;
     background: rgba(255, 255, 255, 0.533);
     border-radius: 8px;
@@ -51,6 +51,21 @@ select:focus {
     border-color: var(--primary-color);
     outline: none;
 }
+.form-group-Data {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente fila si no caben */
+    gap: 10px; /* Espacio entre los inputs */
+  }
+  
+  .form-group-Data input,
+  .form-group-Data textarea,
+  .form-group-Data select {
+    flex: 1 1 calc(25% - 10px); /* Cada input ocupa el 25% del ancho disponible menos el gap */
+    min-width: 200px; /* Define un ancho mínimo para cada input */
+  }
+  
+
+
 
 /* Estilo de checkbox y radio buttons */
 .form-check, .form-radio {
@@ -106,6 +121,6 @@ input[type="checkbox"], input[type="radio"] {
     background-color: #e58135;
 }
 
-.button-option.selected {
+.button-option.active {
     background-color: var(--success-color);
 }

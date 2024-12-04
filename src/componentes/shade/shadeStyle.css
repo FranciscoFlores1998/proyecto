@@ -62,9 +62,10 @@ header {
     flex: 2; /* El centro ocupa más espacio que los lados */
     text-align: center; /* Centrar el contenido dentro del div */
 }
+
 .sidebar {
     position: fixed;
-    top: 100px;
+    top: 80px;
     left: -250px;
     width: 250px;
     height: 100%;
