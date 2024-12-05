@@ -20,7 +20,9 @@ import { ParteEmergenciaIncendio } from "./componentes/formularios/parteEmegenci
 import { PerfilUsuario } from "./componentes/paginas/perfil";
 import { ParteEmergenciaRescate } from "./componentes/formularios/parteEmegenciaRescate";
 import { ParteEmergenciaMatPel } from "./componentes/formularios/parteEmegenciaMatPel";
-import {ParteEmergenciaOtros} from "./componentes/formularios/parteEmegenciaOtros"
+import { ParteEmergenciaOtros } from "./componentes/formularios/parteEmegenciaOtros";
+import { AsistenciaLista } from "./componentes/paginas/asistenciaList";
+import { EmergenciaList } from "./componentes/paginas/emergenciaList";
 
 export function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -92,6 +94,14 @@ export function App() {
           element={<ParteEmergenciaOtros></ParteEmergenciaOtros>}
         ></Route>
         <Route path="/perfil" element={<PerfilUsuario></PerfilUsuario>}></Route>
+        <Route
+          path="/emergencia/lista"
+          element={<EmergenciaList></EmergenciaList>}
+        ></Route>
+        <Route
+          path="/asistencia/lista"
+          element={<AsistenciaLista></AsistenciaLista>}
+        ></Route>
       </Routes>
     </Fragment>
   );

@@ -59,14 +59,10 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
       options: [
         {
           name: "Estadísticas general",
-          path: "/estadistica/general",
+          path: "/estadistica",
           pageTitle: "Estadísticas Generales",
         },
-        {
-          name: "Estadísticas detalladas",
-          path: "/estadistica/detalladas",
-          pageTitle: "Estadísticas Detalladas",
-        },
+       
       ],
     },
     {

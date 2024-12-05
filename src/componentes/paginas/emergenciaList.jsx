@@ -1,10 +1,10 @@
 import React, {Fragment} from "react";
 
-export function Estadisticas(){
+export function EmergenciaList(){
     return(
         <Fragment>
             <div className="form-container">
-                <h1>ESTADISTICA</h1>
+                <h1>Lista de emergencias</h1>
             </div>
         </Fragment>
     );
