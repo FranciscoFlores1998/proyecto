@@ -202,3 +202,23 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 2rem;
 }
+.sin-borde{
+    border: -10px;
+    gap: -100px;
+    padding: -10px;
+    background-color: #add8e6;
+}
+.even {
+    background-color: #f0f0f0; /* Gris claro */
+  }
+  
+  .odd {
+    background-color: #add8e6; /* Blanco */
+  }
+  .search-results div {
+    cursor: pointer; /* Cambia el cursor a puntero */
+  }
+  
+  .search-results div:hover {
+    background-color: #e0e0e0; /* Agrega un color al pasar el mouse, opcional */
+  }

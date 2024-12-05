@@ -146,7 +146,8 @@ export function ParteEmergenciaIncendio() {
   };
   return (
     <div className="form-container">
-      <div className="form-container row">
+        {/*INFORMACION GENERAL*/}
+        <div className="form-container row">
         <h2>Información general</h2>
         <div className="form-group col-3">
           <label htmlFor="claveEmergencia">Clave de la emergencia</label>
