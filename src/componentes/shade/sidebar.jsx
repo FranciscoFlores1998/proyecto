@@ -1,9 +1,10 @@
 import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../shade/shadeStyle.css";
 
 export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeDropdown, setActiveDropdown] = useState(null);
 
   const handleNavigation = (path, pageTitle) => {
@@ -17,11 +18,13 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
     setActiveDropdown(activeDropdown === title ? null : title);
   };
 
+  const isActive = (path) => location.pathname === path;
+
   const menuOptions = [
     {
       title: "Inicio",
       options: [
-        { name: "Dashboard", path: "/Home", pageTitle: "Inicio - Dashboard" },
+        { name: "Dashboard", path: "/Home", pageTitle: "Inicio " },
       ],
     },
     {
@@ -43,12 +46,12 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
       title: "Parte de Emergencia",
       options: [
         {
-          name: "Crear parte",
+          name: "Crear parte de emergencia",
           path: "/emergencia",
           pageTitle: "Crear Parte de Emergencia",
         },
         {
-          name: "Ver partes",
+          name: "Ver partes de emergencias",
           path: "/emergencia/lista",
           pageTitle: "Lista de partes de emergencias",
         },
@@ -62,7 +65,6 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
           path: "/estadistica",
           pageTitle: "Estadísticas Generales",
         },
-       
       ],
     },
     {
@@ -84,9 +86,10 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
           {menuOptions.map((menuItem, index) => (
             <div key={index} className="sidebar-menu-item">
               {menuItem.options.length === 1 ? (
-                // Botón único si solo hay una opción
                 <button
-                  className="sidebar-btn"
+                  className={`sidebar-btn ${
+                    isActive(menuItem.options[0].path) ? "active" : ""
+                  }`}
                   onClick={() =>
                     handleNavigation(
                       menuItem.options[0].path,
@@ -97,10 +100,11 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
                   {menuItem.title}
                 </button>
               ) : (
-                // Submenú si hay varias opciones
                 <>
                   <button
-                    className="sidebar-btn"
+                    className={`sidebar-btn ${
+                      activeDropdown === menuItem.title ? "active" : ""
+                    }`}
                     onClick={() => toggleDropdown(menuItem.title)}
                     aria-expanded={activeDropdown === menuItem.title}
                     aria-controls={`dropdown-${index}`}
@@ -112,7 +116,9 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
                       {menuItem.options.map((option, optionIndex) => (
                         <button
                           key={optionIndex}
-                          className="sidebar-dropdown-btn"
+                          className={`sidebar-dropdown-btn ${
+                            isActive(option.path) ? "active" : ""
+                          }`}
                           onClick={() =>
                             handleNavigation(option.path, option.pageTitle)
                           }
@@ -131,3 +137,4 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
     </Fragment>
   );
 }
+

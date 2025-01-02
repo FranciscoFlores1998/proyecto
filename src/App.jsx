@@ -63,8 +63,8 @@ export function App() {
         </>
       )}
       <Routes>
-        {/*<Route path="/login" element={<Login onLogin={handleLogin} />} />
-                <Route path="/" element={<Navigate to={isAuthenticated ? "/home" : "/login"} />} />
+        <Route path="/login" element={<Login></Login>} />
+               {/* <Route path="/" element={<Navigate to={isAuthenticated ? "/home" : "/login"} />} />
                 <Route path="/home" element={
                     <ProtectedRoute isAuthenticated={isAuthenticated}>
                         <Home />

@@ -36,7 +36,8 @@ export function Login({ onLogin }) {
                     style={{
                         display: 'grid',
                         placeItems: 'center',
-                        height: '50%'
+                        height: '25%',
+                        width: 'auto'
                     }}>
                     <h1 className="h3 mb-3 fw-normal text-center" >Login React</h1>
                     {error && <p style={{ color: 'red' }}>{error}</p>}

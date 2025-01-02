@@ -63,6 +63,7 @@ header {
     text-align: center; /* Centrar el contenido dentro del div */
 }
 
+/* Existing styles */
 .sidebar {
     position: fixed;
     top: 80px;
@@ -79,21 +80,6 @@ header {
     left: 0;
 }
 
-.sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #114851;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.5rem;
-}
-
 .sidebar-content {
     display: flex;
     flex-direction: column;
@@ -101,19 +87,48 @@ header {
 }
 
 .sidebar-btn {
-    background-color: auto;
+    width: 100%;
+    background-color: transparent;
     border: none;
     color: #fff;
     padding: 0.75rem;
-    margin: 0.5rem 0;
     text-align: left;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 .sidebar-btn:hover {
+    background-color: #f39240;
+    font-weight: bold;
+}
+
+/* MARQUE EL BOTÓN DE LA PAGINA ACTIVA
+.sidebar-btn.active {
+    background-color: #206e77;
+    
+}*/
+
+.sidebar-dropdown-btn {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+    margin: 0.25rem 0;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-dropdown-btn:hover {
     background-color: #555;
 }
+
+.sidebar-dropdown-btn.active {
+    background-color: #114851;
+    font-weight: bold;
+}
+
+
 
 /* Pie de página */
 footer {

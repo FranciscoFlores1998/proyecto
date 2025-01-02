@@ -9,7 +9,9 @@ export function Cabecera({toggleSidebar, pageTitle}) {
                 {/* LADO IZQUERDO */}
                 <div className="navbar-brand-left d-flex align-items-center">
                     <button className="btn btn" onClick={toggleSidebar}>
-                        <i className="bi bi-list fs-1">MENU</i>
+                        <i className="bi bi-list fs-1">Menú
+
+                        </i>
                     </button>
                 </div>
                 {/* CENTRAL*/}

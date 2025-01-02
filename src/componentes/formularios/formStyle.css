@@ -18,7 +18,7 @@ body {
 
 /* Contenedor principal */
 .form-container {
-    max-width: 80vw;
+    max-width: 60vw;
     margin: 1rem auto;
     background: rgba(255, 255, 255, 0.533);
     border-radius: 8px;
