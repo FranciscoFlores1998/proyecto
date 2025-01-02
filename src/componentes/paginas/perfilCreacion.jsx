@@ -151,17 +151,13 @@ export function PerfilUsuario() {
                     />
                 </div>
 
-                
-
-                
-
                 {/* Botones */}
                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1rem" }}>
-                    <button className="button button-save" onClick={handleSave}>
-                        Save
-                    </button>
                     <button className="button button-delete" onClick={handleDelete}>
                         Delete
+                    </button>
+                    <button className="button button-save" onClick={handleSave}>
+                        Save
                     </button>
                 </div>
             </div>

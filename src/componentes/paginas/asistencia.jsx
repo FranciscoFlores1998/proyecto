@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
-import { SearchableInput } from './SearchableInput';
+import { useNavigate } from "react-router-dom";
+import { SearchableInput } from "./SearchableInput";
 
 const allVolunteers = [
   { id: 1, nombre: "Juan Pérez", rut: "12345678-9", claveRadial: "41" },
@@ -8,10 +9,18 @@ const allVolunteers = [
   { id: 4, nombre: "Carlos ", rut: "11223344-5", claveRadial: "113" },
   { id: 5, nombre: " Rodríguez", rut: "111111-5", claveRadial: "183" },
   { id: 6, nombre: "Carlos sdaa", rut: "2222-5", claveRadial: "193" },
-  { id: 7, nombre: "asdcqav f Rodríguez", rut: "1122334554544-5", claveRadial: "201" },
+  {
+    id: 7,
+    nombre: "asdcqav f Rodríguez",
+    rut: "1122334554544-5",
+    claveRadial: "201",
+  },
 ];
 
 export function Asistencia() {
+  const navigate = useNavigate();
+  const [error, setError] = useState({});
+  const [selectedVolunteers, setSelectedVolunteers] = useState([]);
   const [formData, setFormData] = useState({
     tipoLlamado: "",
     aCargoDelCuerpo: "",
@@ -23,68 +32,63 @@ export function Asistencia() {
     observacion: "",
     moviles: [],
   });
-  const [error, setError] = useState({});
-  const [showModal, setShowModal] = useState(false);
-  const [confirmSave, setConfirmSave] = useState(false);
-  const [selectedVolunteers, setSelectedVolunteers] = useState([]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
-    if (value) setError(prev => ({ ...prev, [name]: "" }));
+    if (value) setError((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSave = () => {
     const newErrors = {};
-    const requiredFields = ['direccion', 'fechaEmergencia', 'horaInicio', 'oficialEmergencia', 'aCargoDelCuerpo', 'observacion'];
-    requiredFields.forEach(field => {
-      if (!formData[field]) newErrors[field] = `El campo ${field} es obligatorio`;
+    const requiredFields = [
+      "direccion",
+      "fechaEmergencia",
+      "horaInicio",
+      "oficialEmergencia",
+      "aCargoDelCuerpo",
+      "observacion",
+    ];
+    requiredFields.forEach((field) => {
+      if (!formData[field])
+        newErrors[field] = `El campo ${field} es obligatorio`;
     });
-
     if (Object.keys(newErrors).length > 0) {
       setError(newErrors);
     } else {
       setError({});
-      setShowModal(true);
     }
   };
-
-  const handleConfirmSave = () => {
-    if (confirmSave) {
-      console.log("Data guardada:", formData);
-      setShowModal(false);
-      setConfirmSave(false);
-      // Aquí podrías resetear selectedVolunteers si es necesario para una nueva asistencia
-      // setSelectedVolunteers([]);
-    } else {
-      setError(prev => ({ ...prev, confirm: "Por favor, confirme que desea guardar los datos" }));
-    }
+  const handleCancel = () => {
+    navigate("/inicio");
   };
 
   const handleMovilToggle = (movil) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       moviles: prev.moviles.includes(movil)
-        ? prev.moviles.filter(m => m !== movil)
-        : [...prev.moviles, movil]
+        ? prev.moviles.filter((m) => m !== movil)
+        : [...prev.moviles, movil],
     }));
   };
 
   const handleSelectVolunteer = (volunteer) => {
-    if (!selectedVolunteers.find(v => v.id === volunteer.id)) {
-      setSelectedVolunteers(prev => [...prev, volunteer]);
+    if (!selectedVolunteers.find((v) => v.id === volunteer.id)) {
+      setSelectedVolunteers((prev) => [...prev, volunteer]);
     }
   };
 
   const handleRemoveVolunteer = (id) => {
-    setSelectedVolunteers(prev => prev.filter(v => v.id !== id));
+    setSelectedVolunteers((prev) => prev.filter((v) => v.id !== id));
   };
 
   const sortedVolunteers = useMemo(() => {
-    return [...selectedVolunteers].sort((a, b) => a.claveRadial.localeCompare(b.claveRadial));
+    return [...selectedVolunteers].sort((a, b) =>
+      a.claveRadial.localeCompare(b.claveRadial)
+    );
   }, [selectedVolunteers]);
 
   return (
@@ -131,7 +135,9 @@ export function Asistencia() {
             <option value="tipoInstitucion2">COMANDANCIA</option>
             <option value="tipoInstitucion3">COMANDANCIA</option>
           </select>
-          {error.aCargoDelCuerpo && <p className="error-message">{error.aCargoDelCuerpo}</p>}
+          {error.aCargoDelCuerpo && (
+            <p className="error-message">{error.aCargoDelCuerpo}</p>
+          )}
         </div>
         <div className="form-group col-6">
           <label htmlFor="oficialEmergencia">Oficial a cargo</label>
@@ -142,7 +148,9 @@ export function Asistencia() {
             value={formData.oficialEmergencia}
             onChange={handleChange}
           />
-          {error.oficialEmergencia && <p className="error-message">{error.oficialEmergencia}</p>}
+          {error.oficialEmergencia && (
+            <p className="error-message">{error.oficialEmergencia}</p>
+          )}
         </div>
         <div className="form-group col-4">
           <label htmlFor="horaInicio">Hora de inicio</label>
@@ -153,7 +161,9 @@ export function Asistencia() {
             value={formData.horaInicio}
             onChange={handleChange}
           />
-          {error.horaInicio && <p className="error-message">{error.horaInicio}</p>}
+          {error.horaInicio && (
+            <p className="error-message">{error.horaInicio}</p>
+          )}
         </div>
         <div className="form-group col-4">
           <label htmlFor="horaFin">Hora de fin</label>
@@ -174,7 +184,9 @@ export function Asistencia() {
             value={formData.fechaEmergencia}
             onChange={handleChange}
           />
-          {error.fechaEmergencia && <p className="error-message">{error.fechaEmergencia}</p>}
+          {error.fechaEmergencia && (
+            <p className="error-message">{error.fechaEmergencia}</p>
+          )}
         </div>
         <div className="form-group col-6">
           <label htmlFor="direccion">Dirección</label>
@@ -185,7 +197,9 @@ export function Asistencia() {
             value={formData.direccion}
             onChange={handleChange}
           />
-          {error.direccion && <p className="error-message">{error.direccion}</p>}
+          {error.direccion && (
+            <p className="error-message">{error.direccion}</p>
+          )}
         </div>
         <div className="form-group col-6">
           <label htmlFor="observacion">Observaciones</label>
@@ -195,10 +209,12 @@ export function Asistencia() {
             value={formData.observacion}
             onChange={handleChange}
           ></textarea>
-          {error.observacion && <p className="error-message">{error.observacion}</p>}
+          {error.observacion && (
+            <p className="error-message">{error.observacion}</p>
+          )}
         </div>
       </div>
-      
+
       <div className="form-container">
         <h2>ASISTENCIA</h2>
         <div className="form-container row">
@@ -209,30 +225,43 @@ export function Asistencia() {
               placeholder="Buscar por nombre o RUT"
               data={allVolunteers}
               onSelect={handleSelectVolunteer}
-              searchKeys={['nombre', 'rut']}
+              searchKeys={["nombre", "rut"]}
               selectedVolunteers={selectedVolunteers}
             />
           </div>
           <div className="form-group col-4">
-            <label htmlFor="busquedaClaveRadial">Búsqueda por CLAVE RADIAL</label>
+            <label htmlFor="busquedaClaveRadial">
+              Búsqueda por CLAVE RADIAL
+            </label>
             <SearchableInput
               placeholder="Buscar por clave radial"
               data={allVolunteers}
               onSelect={handleSelectVolunteer}
-              searchKeys={['claveRadial']}
+              searchKeys={["claveRadial"]}
               selectedVolunteers={selectedVolunteers}
             />
           </div>
         </div>
 
         <div className="form-container selected-volunteers ">
-          <h3 >Voluntarios asistentes </h3>
+          <h3>Voluntarios asistentes </h3>
           {sortedVolunteers.length > 0 ? (
-            <ul >
+            <ul>
               {sortedVolunteers.map((volunteer) => (
-                <li className="row" key={volunteer.id} style={{padding:2}}>
-                  <div className="col-4 " style={{gap:10}} >{volunteer.nombre} - {volunteer.rut}</div><div className="col-1 text-center" >  {volunteer.claveRadial}</div>
-                  <button className="button button-delete col-auto"  onClick={() => handleRemoveVolunteer(volunteer.id)}>Eliminar</button>
+                <li className="row" key={volunteer.id} style={{ padding: 2 }}>
+                  <div className="col-4 " style={{ gap: 10 }}>
+                    {volunteer.nombre} - {volunteer.rut}
+                  </div>
+                  <div className="col-1 text-center">
+                    {" "}
+                    {volunteer.claveRadial}
+                  </div>
+                  <button
+                    className="button button-delete col-auto"
+                    onClick={() => handleRemoveVolunteer(volunteer.id)}
+                  >
+                    Eliminar
+                  </button>
                 </li>
               ))}
             </ul>
@@ -241,14 +270,16 @@ export function Asistencia() {
           )}
         </div>
       </div>
-      
+
       <div className="form-container">
         <h2>Móviles asistentes</h2>
         <div className="button-option-group">
           {["Movil1", "Movil2", "Movil3"].map((movil) => (
             <button
               key={movil}
-              className={`button-option ${formData.moviles.includes(movil) ? "active" : ""}`}
+              className={`button-option ${
+                formData.moviles.includes(movil) ? "active" : ""
+              }`}
               onClick={() => handleMovilToggle(movil)}
             >
               {movil}
@@ -256,32 +287,23 @@ export function Asistencia() {
           ))}
         </div>
       </div>
-      
-      <div className="button-group">
-        <button className="button button-save" onClick={handleSave}>Guardar</button>
+
+      {/* Botones de acción */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "1rem",
+        }}
+      >
+        <button className="button button-save" onClick={handleSave}>
+          Guardar
+        </button>
+        <button className="button button-delete" onClick={handleCancel}>
+          Cancelar
+        </button>
+        
       </div>
-      
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Confirmar Guardado</h2>
-            <label>
-              <input
-                type="checkbox"
-                checked={confirmSave}
-                onChange={(e) => setConfirmSave(e.target.checked)}
-              />
-              Confirmo que deseo guardar los datos
-            </label>
-            {error.confirm && <p className="error-message">{error.confirm}</p>}
-            <div className="modal-buttons">
-              <button onClick={handleConfirmSave}>Guardar</button>
-              <button onClick={() => setShowModal(false)}>Cancelar</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
-

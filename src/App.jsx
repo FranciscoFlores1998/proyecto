@@ -23,6 +23,7 @@ import { ParteEmergenciaMatPel } from "./componentes/formularios/parteEmegenciaM
 import { ParteEmergenciaOtros } from "./componentes/formularios/parteEmegenciaOtros";
 import { AsistenciaLista } from "./componentes/paginas/asistenciaList";
 import { EmergenciaList } from "./componentes/paginas/emergenciaList";
+import { BusquedaVoluntario } from "./componentes/paginas/busqueda";
 
 export function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -102,6 +103,7 @@ export function App() {
           path="/asistencia/lista"
           element={<AsistenciaLista></AsistenciaLista>}
         ></Route>
+        <Route path="/busqueda" element={<BusquedaVoluntario></BusquedaVoluntario>}></Route>
       </Routes>
     </Fragment>
   );

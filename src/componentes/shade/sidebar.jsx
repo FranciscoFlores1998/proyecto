@@ -77,6 +77,16 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
         },
       ],
     },
+    {
+      title: "Busqueda",
+      options: [
+        {
+          name: "buscar voluntarios",
+          path: "/busqueda",
+          pageTitle: "Busqueda de voluntarios",
+        },
+      ],
+    },
   ];
 
   return (

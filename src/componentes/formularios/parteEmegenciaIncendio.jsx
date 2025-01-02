@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../formularios/formStyle.css";
 
 export function ParteEmergenciaIncendio() {
   //constantes generales
   const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [confirmSave, setConfirmSave] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     //variables generales
     claveEmergencia: "", //emergencia
@@ -116,24 +115,15 @@ export function ParteEmergenciaIncendio() {
       newErrors.preinforme = "El preinforme es obligatorio";
     if (!formData.nombreVictima)
       newErrors.nombreVictima = "El nombre del involucrado es obligatoria";
-
     if (Object.keys(newErrors).length > 0) {
       setError(newErrors);
       return;
     }
-
     setError({});
-    setShowModal(true);
   };
 
-  const handleConfirmSave = () => {
-    if (confirmSave) {
-      console.log("Data guardada:", formData);
-      setShowModal(false);
-      setConfirmSave(false);
-    } else {
-      setError("Por favor, confirme que desea guardar los datos");
-    }
+  const handleCancel = () => {
+    navigate("/emergencia");
   };
 
   const handleMovilToggle = (movil) => {
@@ -551,31 +541,18 @@ export function ParteEmergenciaIncendio() {
         )}
       </div>
       {/*BOTON DE ACCION*/}
-      <div className="button-group">
+      <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "1rem",
+        }}>
         <button className="button button-save" onClick={handleSave}>
           Guardar
         </button>
+        <button className="button button-delete" onClick={handleCancel}>
+          Cancelar
+        </button>
       </div>
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Confirmar Guardado</h2>
-            <label>
-              <input
-                type="checkbox"
-                checked={confirmSave}
-                onChange={(e) => setConfirmSave(e.target.checked)}
-              />
-              Confirmo que deseo guardar los datos
-            </label>
-            {error.confirm && <p className="error-message">{error.confirm}</p>}
-            <div className="modal-buttons">
-              <button onClick={handleConfirmSave}>Guardar</button>
-              <button onClick={() => setShowModal(false)}>Cancelar</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
