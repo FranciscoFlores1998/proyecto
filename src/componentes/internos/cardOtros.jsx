@@ -11,7 +11,11 @@ export function CardOtros() {
   return (
     <Fragment>
       <div className="card card-custom">
-        <img src="https://picsum.photos/200" className="card-img" alt="..." />
+        <img
+          src="/bomberos.png"
+          className="card-img"
+          alt="Logo"
+        />
         <div className="card-body">
           <h2 className="card-title">Otros Servicios</h2>
         </div>

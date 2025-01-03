@@ -23,9 +23,7 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
   const menuOptions = [
     {
       title: "Inicio",
-      options: [
-        { name: "Dashboard", path: "/Home", pageTitle: "Inicio " },
-      ],
+      options: [{ name: "Dashboard", path: "/Home", pageTitle: "Inicio " }],
     },
     {
       title: "Parte de Asistencia",
@@ -84,7 +82,11 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
           name: "buscar voluntarios",
           path: "/busqueda",
           pageTitle: "Busqueda de voluntarios",
-        },
+        },{
+          name: "Crear voluntarios",
+          path: "/PerfilNew",
+          pageTitle: "Creador de voluntarios"
+        }
       ],
     },
   ];
@@ -147,4 +149,3 @@ export function SidebarMenu({ sidebarOpen, toggleSidebar, changePage }) {
     </Fragment>
   );
 }
-

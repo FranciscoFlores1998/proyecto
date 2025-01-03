@@ -24,13 +24,16 @@ import { ParteEmergenciaOtros } from "./componentes/formularios/parteEmegenciaOt
 import { AsistenciaLista } from "./componentes/paginas/asistenciaList";
 import { EmergenciaList } from "./componentes/paginas/emergenciaList";
 import { BusquedaVoluntario } from "./componentes/paginas/busqueda";
+import { PerfilCreador } from "./componentes/paginas/perfilCreacion";
+import { RegistrarUsuario } from "./componentes/paginas/resgistroUsuario";
 
 export function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState("Inicio");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
-  const isLoginPage = location.pathname === "/login";
+  const isLoginPage = location.pathname === "/login" ;
+  const isResgisterPage = location.pathname === "/registro";
 
   // Función para alternar el estado del sidebar
   const toggleSidebar = () => {
@@ -53,7 +56,7 @@ export function App() {
   return (
     <Fragment>
       {/* Renderizar cabecera y sidebar solo si no estamos en la página de login */}
-      {!isLoginPage && (
+      {!isLoginPage && !isResgisterPage && (
         <>
           <Cabecera toggleSidebar={toggleSidebar} pageTitle={currentPage} />
           <SidebarMenu
@@ -63,9 +66,10 @@ export function App() {
           />
         </>
       )}
+      
       <Routes>
         <Route path="/login" element={<Login></Login>} />
-               {/* <Route path="/" element={<Navigate to={isAuthenticated ? "/home" : "/login"} />} />
+        {/* <Route path="/" element={<Navigate to={isAuthenticated ? "/home" : "/login"} />} />
                 <Route path="/home" element={
                     <ProtectedRoute isAuthenticated={isAuthenticated}>
                         <Home />
@@ -96,6 +100,10 @@ export function App() {
         ></Route>
         <Route path="/perfil" element={<PerfilUsuario></PerfilUsuario>}></Route>
         <Route
+          path="/PerfilNew"
+          element={<PerfilCreador></PerfilCreador>}
+        ></Route>
+        <Route
           path="/emergencia/lista"
           element={<EmergenciaList></EmergenciaList>}
         ></Route>
@@ -103,7 +111,11 @@ export function App() {
           path="/asistencia/lista"
           element={<AsistenciaLista></AsistenciaLista>}
         ></Route>
-        <Route path="/busqueda" element={<BusquedaVoluntario></BusquedaVoluntario>}></Route>
+        <Route
+          path="/busqueda"
+          element={<BusquedaVoluntario></BusquedaVoluntario>}
+        ></Route>
+        <Route path="/registro" element={<RegistrarUsuario></RegistrarUsuario>}></Route>
       </Routes>
     </Fragment>
   );

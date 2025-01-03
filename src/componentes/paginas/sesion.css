@@ -1,6 +1,6 @@
 /* Fondo de página con degradado */
 .login-page {
-    background: linear-gradient(135deg, #10444d, #206e77, #f39240);
+    background: linear-gradient(135deg, #003100, #101e7c, #04106c);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -222,3 +222,13 @@
   .search-results div:hover {
     background-color: #e0e0e0; /* Agrega un color al pasar el mouse, opcional */
   }
+  .img-circle {
+    width: 80px; /* Ajusta el tamaño de la imagen */
+    height: 80px; /* Asegúrate de que sea cuadrada */
+    object-fit: cover; /* Asegura que la imagen se ajuste al contenedor sin deformarse */
+    border-radius: 50%; /* Hace que el contenedor sea circular */
+    overflow: hidden; /* Recorta el contenido fuera del círculo */
+    border: 2px solid #ddd; /* Opcional: agrega un borde decorativo */
+    display: block; /* Centra si está dentro de un contenedor */
+    margin: 0 auto; /* Centra horizontalmente */
+}

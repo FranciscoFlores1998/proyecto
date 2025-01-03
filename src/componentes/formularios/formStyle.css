@@ -28,7 +28,7 @@ body {
 
 /* Títulos y enunciados */
 h1, h2, .form-enunciado {
-    color: var(--primary-color);
+    color: var(--text-color);
     font-weight: bold;
     margin-bottom: 1rem;
 }

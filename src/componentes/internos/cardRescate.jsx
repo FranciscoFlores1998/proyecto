@@ -11,7 +11,7 @@ export function CardRescate() {
   return (
     <Fragment>
       <div className="card card-custom">
-        <img src="https://picsum.photos/200" className="card-img" alt="..." />
+        <img src="/rescate.png" className="card-img"  alt="Logo" />
         <div className="card-body">
           <h2 className="card-title">Rescates</h2>
         </div>

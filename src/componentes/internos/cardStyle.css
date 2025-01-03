@@ -1,9 +1,13 @@
 .card-custom {
     height: auto;
-    width: 18rem;
+    width: auto;
     margin: auto;
+    align-items: center;
 }
-
+.card-img{
+    height: 250px;
+    width: 200px;
+}
 .card-footer {
     display: flex;
     flex-direction: column;

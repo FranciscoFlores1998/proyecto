@@ -12,11 +12,18 @@ export function AsistenciaLista() {
     async function fetchPartesAsistencia() {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/parte-asistencia/obtener`);
+        const response = await fetch(`${API_BASE_URL}/parte-asistencia/obtener`,{
+          method:'GET',
+          headers: {
+            'ngrok-skip-browser-warning': 'true',
+          }
+        });
+        console.log(response);
         if (!response.ok) {
           throw new Error("Error al obtener las asistencias.");
         }
         const data = await response.json();
+        console.log(data);
         setPartesAsistencia(data);
       } catch (error) {
         console.error("Error al cargar partes de asistencia:", error);
@@ -32,12 +39,12 @@ export function AsistenciaLista() {
 
   const handleView = (id) => {
     // Lógica para ver detalles de una asistencia (puedes personalizar esto)
-    alert(`Visualizar detalles de la asistencia con ID: ${id}`);
+    alert("Visualizar detalles de la asistencia con ID: ${id}");
   };
 
   const handleDownload = (parte) => {
     // Lógica para descargar la asistencia como PDF (puedes personalizar esto)
-    alert(`Descargar información de la asistencia con ID: ${parte.id}`);
+    alert('Descargar información de la asistencia con ID: ${parte.id}');
   };
 
   if (loading) {

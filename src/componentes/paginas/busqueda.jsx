@@ -1,61 +1,74 @@
-import React, { useState } from "react";
-import { SearchableInput } from "./SearchableInput";
+import React, { useState, useEffect } from "react";
+import API_BASE_URL from "../../apiConfig";
 
 export function BusquedaVoluntario() {
-  const [selectedVolunteers, setSelectedVolunteers] = useState([]);
+  const [volunteers, setVolunteers] = useState([]); // Lista de todos los voluntarios
   const [formData, setFormData] = useState({
-    nombre: "",
-    FechaNacimento: "",
+    nombreVol: "",
+    fechaNac: "",
     direccion: "",
-    telefono: "",
-    fechaIngreso: "",
-    cargoVoluntario: "",
-    claveRadial: "",
+    numeroContacto: "",
     tipoSangre: "",
-    alergias: "",
     enfermedades: "",
+    alergias: "",
+    fechaIngreso: "",
+    claveRadial: "",
+    cargoVoluntario: "",
+    rutVoluntario: "",
+    idCompania: "",
+    idUsuario: null
   });
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(null);
 
-  // Función para manejar la selección de un voluntario
-  const handleSelectVolunteer = async (volunteer) => {
-    try {
-      setLoading(true);
-      setFetchError(null);
+  // Fetch inicial para obtener la lista de voluntarios
+  useEffect(() => {
+    async function fetchVolunteers() {
+      try {
+        setLoading(true);
+        setFetchError(null);
 
-      // Llamar a la API para obtener los datos del voluntario
-      const response = await fetch(`/api/volunteers/${volunteer.id}`);
-      if (!response.ok) {
-        throw new Error("Error al obtener datos del voluntario");
+        const response = await fetch(`${API_BASE_URL}voluntario/obtener`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "true",
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Error al obtener la lista de voluntarios.");
+        }
+        const data = await response.json();
+        setVolunteers(data); // Poblar la lista de voluntarios
+      } catch (error) {
+        console.error("Error al cargar voluntarios:", error);
+        setFetchError("No se pudo cargar la lista de voluntarios.");
+      } finally {
+        setLoading(false);
       }
-
-      const data = await response.json();
-
-      // Poblar los campos del formulario con los datos del voluntario
-      setFormData({
-        nombre: data.nombre || "",
-        FechaNacimento: data.fechaNacimiento || "",
-        direccion: data.direccion || "",
-        telefono: data.telefono || "",
-        fechaIngreso: data.fechaIngreso || "",
-        cargoVoluntario: data.cargoVoluntario || "",
-        claveRadial: data.claveRadial || "",
-        tipoSangre: data.tipoSangre || "",
-        alergias: data.alergias || "",
-        enfermedades: data.enfermedades || "",
-      });
-
-      // Agregar el voluntario a la lista de seleccionados
-      if (!selectedVolunteers.find((v) => v.id === volunteer.id)) {
-        setSelectedVolunteers((prev) => [...prev, volunteer]);
-      }
-    } catch (error) {
-      console.error("Error al cargar datos del voluntario:", error);
-      setFetchError("No se pudieron cargar los datos del voluntario.");
-    } finally {
-      setLoading(false);
     }
+
+    fetchVolunteers();
+  }, []);
+
+  // Función para manejar la selección de un voluntario
+  const handleSelectVolunteer = (volunteer) => {
+    // Poblar los campos del formulario con los datos del voluntario seleccionado
+    setFormData({
+      nombreVol: volunteer.nombreVol || "",
+      fechaNac: volunteer.fechaNac || "",
+      direccion: volunteer.direccion || "",
+      numeroContacto: volunteer.numeroContacto || "",
+      tipoSangre: volunteer.tipoSangre || "",
+      enfermedades: volunteer.enfermedades || "",
+      alergias: volunteer.alergias || "",
+      fechaIngreso: volunteer.fechaIngreso || "",
+      claveRadial: volunteer.claveRadial || "",
+      cargoVoluntario: volunteer.cargoVoluntario || "",
+      rutVoluntario: volunteer.rutVoluntario || "",
+      idCompania: volunteer.idCompania || "",
+      idUsuario: volunteer.idUsuario || null
+    });
   };
 
   // Función para manejar cambios en los campos editables
@@ -67,53 +80,88 @@ export function BusquedaVoluntario() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  // Método para actualizar voluntario
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    console.log("Formulario enviado:", formData);
-    console.log("Voluntarios seleccionados:", selectedVolunteers);
-    // Aquí se podrían enviar los datos editables a la API
+    console.log(formData.rutVoluntario);
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}voluntario/actualizar/${formData.rutVoluntario}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "true",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Error al actualizar el voluntario.");
+      }
+
+      alert("Voluntario actualizado exitosamente.");
+      // Actualizar la lista de voluntarios
+      setVolunteers((prev) =>
+        prev.map((v) =>
+          v.rutVoluntario === formData.rutVoluntario ? formData : v
+        )
+      );
+    } catch (error) {
+      console.error("Error al actualizar voluntario:", error);
+      alert("No se pudo actualizar el voluntario.");
+    }
   };
 
   return (
     <div className="form-container">
-      <h1>Búsqueda y Registro de Voluntarios</h1>
+      <h1>Búsqueda y Actualización de Voluntarios</h1>
 
-      {/* Búsqueda de voluntarios */}
-      <div className="form-group">
-        <label htmlFor="busquedaNombreRut">Búsqueda por NOMBRE o RUT</label>
-        <SearchableInput
-          placeholder="Buscar por nombre o RUT"
-          data={selectedVolunteers} // Opcional: inicializar con voluntarios existentes
-          onSelect={handleSelectVolunteer}
-          searchKeys={["nombre", "rut"]}
-        />
-      </div>
-
+      {/* Mostrar error de carga */}
       {fetchError && <p className="error-message">{fetchError}</p>}
-      {loading && <p>Cargando datos del voluntario...</p>}
+      {loading && <p>Cargando lista de voluntarios...</p>}
 
-      {/* Formulario de registro */}
-      <form onSubmit={handleSubmit}>
-        {/* Campos solo lectura */}
+      {/* Lista de voluntarios */}
+      {!loading && volunteers.length > 0 && (
+        <div>
+          <h2>Voluntarios</h2>
+          <ul className="volunteers-list">
+            {volunteers.map((volunteer) => (
+              <li
+                key={volunteer.rutVoluntario}
+                onClick={() => handleSelectVolunteer(volunteer)}
+                className="volunteer-item"
+                style={{ cursor: "pointer" }}
+              >
+                {volunteer.nombreVol} - {volunteer.rutVoluntario}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Formulario de actualización */}
+      <form onSubmit={handleUpdate}>
         <div className="input-container">
-          <label htmlFor="nombre">Nombre</label>
+          <label htmlFor="nombreVol">Nombre</label>
           <input
             type="text"
-            name="nombre"
-            value={formData.nombre}
-            readOnly
+            name="nombreVol"
+            value={formData.nombreVol}
+            onChange={handleChange}
             className="form-control"
           />
         </div>
 
         <div className="row">
           <div className="input-container col-6">
-            <label htmlFor="FechaNacimento">Fecha de Nacimiento</label>
+            <label htmlFor="fechaNac">Fecha de Nacimiento</label>
             <input
               type="date"
-              name="FechaNacimento"
-              value={formData.FechaNacimento}
-              readOnly
+              name="fechaNac"
+              value={formData.fechaNac}
+              onChange={handleChange}
               className="form-control"
             />
           </div>
@@ -123,7 +171,7 @@ export function BusquedaVoluntario() {
               type="date"
               name="fechaIngreso"
               value={formData.fechaIngreso}
-              readOnly
+              onChange={handleChange}
               className="form-control"
             />
           </div>
@@ -135,12 +183,11 @@ export function BusquedaVoluntario() {
             type="text"
             name="tipoSangre"
             value={formData.tipoSangre}
-            readOnly
+            onChange={handleChange}
             className="form-control"
           />
         </div>
 
-        {/* Campos editables */}
         <div className="input-container">
           <label htmlFor="direccion">Dirección</label>
           <input
@@ -153,11 +200,11 @@ export function BusquedaVoluntario() {
         </div>
 
         <div className="input-container">
-          <label htmlFor="telefono">Teléfono</label>
+          <label htmlFor="numeroContacto">Número de Contacto</label>
           <input
             type="tel"
-            name="telefono"
-            value={formData.telefono}
+            name="numeroContacto"
+            value={formData.numeroContacto}
             onChange={handleChange}
             className="form-control"
           />
@@ -209,7 +256,7 @@ export function BusquedaVoluntario() {
         </div>
 
         <button type="submit" className="submit-btn button button-save">
-          Guardar
+          Actualizar
         </button>
       </form>
     </div>

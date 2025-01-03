@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import "../internos/cardStyle.css";
 
-import "../imagenes/INCENDIO.png";
 
 export function CardMatPel() {
   const navigate = useNavigate();
@@ -14,7 +13,11 @@ export function CardMatPel() {
   return (
     <Fragment>
       <div className="card card-custom">
-        <img src="https://picsum.photos/200" className="card-img" alt="..." />
+      <img
+              src="/MatPel.png"
+              className="card-img"
+              alt="Logo"
+            />
         <div className="card-body">
           <h2 className="card-title">Materiales Peligrosos</h2>
         </div>

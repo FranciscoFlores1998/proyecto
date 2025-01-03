@@ -3,31 +3,32 @@ import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../../apiConfig";
 import "../paginas/sesion.css";
 
-export function Login({ onLogin }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+export function RegistrarUsuario({ onLogin }) {
+  const [username, setUsername] = useState(""); // Campo de nombre de usuario
+  const [password, setPassword] = useState(""); // Campo de contraseña
+  const [error, setError] = useState(""); // Manejo de errores
+    const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      // Envía las credenciales al backend utilizando fetch
-      const response = await fetch("http://localhost:3000/login", {
+      // Envía las credenciales al backend con tipoUsuario=2
+      const response = await fetch(`${API_BASE_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify({
-          username,
+          username, // Usar el nombre de usuario ingresado
           password,
-          tipoUsuario: 2, // Se agrega el tipo de usuario
+          tipoUsuario: 2, // Enviar tipo de usuario como 2
         }),
       });
 
       if (!response.ok) {
-        throw new Error("Username o contraseña incorrectos");
+        throw new Error("Usuario o contraseña incorrectos");
       }
 
       const data = await response.json();
@@ -46,11 +47,9 @@ export function Login({ onLogin }) {
       setError(err.message);
     }
   };
-
   const handleRegisterRedirect = () => {
-    navigate("/registro"); // Redirige a la ruta de registro
+    navigate("/login"); // Redirige a la ruta de registro
   };
-
   return (
     <Fragment>
       <div className="login-page">
@@ -64,7 +63,6 @@ export function Login({ onLogin }) {
           }}
         >
           {error && <p style={{ color: "red" }}>{error}</p>}
-
           <div className="login-container">
             <img
               src="/logo.png"
@@ -72,27 +70,29 @@ export function Login({ onLogin }) {
               width={150}
               alt="Logo"
             />
-            <h1 className="h3 mb-3 fw-normal text-center">Sistema de partes</h1>
+            <h1 className="h3 mb-3 fw-normal text-center">Registrar Usuario</h1>
+            {/* Campo de nombre de usuario */}
             <div className="form-floating">
               <input
-                type="username"
+                type="text"
                 className="form-control"
-                id="username"
-                name="username"
-                placeholder="rut del voluntario"
+                id="txt_usuario"
+                name="txt_usuario"
+                placeholder="Usuario"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
-              <label htmlFor="txt_correo">Usuario</label>
+              <label htmlFor="txt_usuario">Usuario</label>
             </div>
+            {/* Campo de contraseña */}
             <div className="form-floating">
               <input
                 type="password"
                 className="form-control"
                 id="txt_contraseña"
                 name="txt_contraseña"
-                placeholder="contraseña"
+                placeholder="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -108,17 +108,17 @@ export function Login({ onLogin }) {
                   id="flexCheckDefault"
                 />
                 <label className="form-check-label" htmlFor="flexCheckDefault">
-                  RECUPERAR
+                  Recordar sesión
                 </label>
               </div>
-              <button className="login-button" onClick={handleLogin}>
-                Iniciar Sesión
+              <button className="register-button" onClick={handleLogin}>
+                Registrar
               </button>
               <button
-                className="register-button mt-3"
+                className="login-button mt-3"
                 onClick={handleRegisterRedirect}
               >
-                Registrar Usuario
+                Iniciar sesión
               </button>
               <p className="mt-5 mb-3 text-body-secondary text-center">
                 &copy; 2024

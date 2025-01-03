@@ -34,7 +34,7 @@ export function Asistencia() {
     observaciones: "",
     idMovil: [], // Asegúrate de usar este nombre en todo el componente
   });
-  
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -83,18 +83,17 @@ export function Asistencia() {
             idMovil: formData.idMovil[0] || null,
           }),
         });
-    
+
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.error || "Error al guardar la asistencia.");
         }
-    
+
         alert("Asistencia guardada exitosamente.");
         navigate("/parte-asistencia");
       } catch (err) {
         setBackendError(err.message); // Guarda el error en el estado
       }
-    };
     }
   };
 
@@ -129,6 +128,7 @@ export function Asistencia() {
 
   return (
     <div className="form-container">
+      {/* Formulario */}
       <div className="form-container row">
         <h2>Información general</h2>
         {/* Formulario de asistencia */}
@@ -251,7 +251,7 @@ export function Asistencia() {
           )}
         </div>
       </div>
-
+      {/* Asistencia */}
       <div className="form-container">
         <h2>ASISTENCIA</h2>
         <div className="form-container row">
@@ -282,6 +282,7 @@ export function Asistencia() {
           )}
         </div>
       </div>
+      {/* Moviles */}
 
       {/* Botones de acción */}
       <div>

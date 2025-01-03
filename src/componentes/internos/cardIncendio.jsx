@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import "../internos/cardStyle.css";
 
-import "../imagenes/INCENDIO.png";
 
 export function CardIncendio() {
   const navigate = useNavigate();
@@ -14,7 +13,11 @@ export function CardIncendio() {
   return (
     <Fragment>
       <div className="card card-custom">
-        <img src="https://picsum.photos/200" className="card-img" alt="..." />
+        <img
+              src="/incendio.png"
+              className="img"
+              alt="Logo"
+            />
         <div className="card-body">
           <h2 className="card-title">Incendios</h2>
         </div>
