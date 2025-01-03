@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import API_BASE_URL from "../../apiConfig";
 
 export function BusquedaVoluntario() {
-  const [volunteers, setVolunteers] = useState([]); // Lista de todos los voluntarios
+  const [volunteers, setVolunteers] = useState([]);
+  const [filteredVolunteers, setFilteredVolunteers] = useState([]);
   const [formData, setFormData] = useState({
     nombreVol: "",
     fechaNac: "",
@@ -15,31 +16,31 @@ export function BusquedaVoluntario() {
     claveRadial: "",
     cargoVoluntario: "",
     rutVoluntario: "",
-    idCompania: "",
-    idUsuario: null
   });
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(null);
 
-  // Fetch inicial para obtener la lista de voluntarios
   useEffect(() => {
     async function fetchVolunteers() {
       try {
         setLoading(true);
         setFetchError(null);
 
-        const response = await fetch(`${API_BASE_URL}voluntario/obtener`, {
+        const response = await fetch(`${API_BASE_URL}/voluntario/obtener`, {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
             "ngrok-skip-browser-warning": "true",
           },
         });
+
         if (!response.ok) {
           throw new Error("Error al obtener la lista de voluntarios.");
         }
+
         const data = await response.json();
-        setVolunteers(data); // Poblar la lista de voluntarios
+        setVolunteers(data);
+        setFilteredVolunteers(data); // Inicialmente muestra todos los voluntarios
       } catch (error) {
         console.error("Error al cargar voluntarios:", error);
         setFetchError("No se pudo cargar la lista de voluntarios.");
@@ -51,9 +52,20 @@ export function BusquedaVoluntario() {
     fetchVolunteers();
   }, []);
 
-  // Función para manejar la selección de un voluntario
+  const handleSearchChange = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    const filtered = volunteers.filter(
+      (volunteer) =>
+        volunteer.nombreVol.toLowerCase().includes(query) ||
+        volunteer.rutVoluntario.toLowerCase().includes(query)
+    );
+
+    setFilteredVolunteers(filtered);
+  };
+
   const handleSelectVolunteer = (volunteer) => {
-    // Poblar los campos del formulario con los datos del voluntario seleccionado
     setFormData({
       nombreVol: volunteer.nombreVol || "",
       fechaNac: volunteer.fechaNac || "",
@@ -66,12 +78,9 @@ export function BusquedaVoluntario() {
       claveRadial: volunteer.claveRadial || "",
       cargoVoluntario: volunteer.cargoVoluntario || "",
       rutVoluntario: volunteer.rutVoluntario || "",
-      idCompania: volunteer.idCompania || "",
-      idUsuario: volunteer.idUsuario || null
     });
   };
 
-  // Función para manejar cambios en los campos editables
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -80,76 +89,64 @@ export function BusquedaVoluntario() {
     }));
   };
 
-  // Método para actualizar voluntario
-  const handleUpdate = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData.rutVoluntario);
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}voluntario/actualizar/${formData.rutVoluntario}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "true",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Error al actualizar el voluntario.");
-      }
-
-      alert("Voluntario actualizado exitosamente.");
-      // Actualizar la lista de voluntarios
-      setVolunteers((prev) =>
-        prev.map((v) =>
-          v.rutVoluntario === formData.rutVoluntario ? formData : v
-        )
-      );
-    } catch (error) {
-      console.error("Error al actualizar voluntario:", error);
-      alert("No se pudo actualizar el voluntario.");
-    }
+    console.log("Formulario enviado:", formData);
   };
 
   return (
     <div className="form-container">
-      <h1>Búsqueda y Actualización de Voluntarios</h1>
+      <h1>Búsqueda y Registro de Voluntarios</h1>
 
       {/* Mostrar error de carga */}
       {fetchError && <p className="error-message">{fetchError}</p>}
       {loading && <p>Cargando lista de voluntarios...</p>}
 
-      {/* Lista de voluntarios */}
-      {!loading && volunteers.length > 0 && (
-        <div>
-          <h2>Voluntarios</h2>
-          <ul className="volunteers-list">
-            {volunteers.map((volunteer) => (
-              <li
-                key={volunteer.rutVoluntario}
-                onClick={() => handleSelectVolunteer(volunteer)}
-                className="volunteer-item"
-                style={{ cursor: "pointer" }}
-              >
-                {volunteer.nombreVol} - {volunteer.rutVoluntario}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {/* Buscador */}
+      <div className="input-container">
+        <label htmlFor="search">Buscar Voluntario</label>
+        <input
+          type="text"
+          id="search"
+          placeholder="Buscar por nombre o RUT"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="form-control"
+        />
+      </div>
 
-      {/* Formulario de actualización */}
-      <form onSubmit={handleUpdate}>
+  {/* Lista de voluntarios filtrados */}
+{!loading && filteredVolunteers.length > 0 && (
+  <div>
+    <h2>Resultados</h2>
+    <ul className="volunteers-list">
+      {filteredVolunteers.slice(0, 10).map((volunteer) => (
+        <li
+          key={volunteer.rutVoluntario}
+          onClick={() => handleSelectVolunteer(volunteer)}
+          className="volunteer-item"
+          style={{ cursor: "pointer" }}
+        >
+          {volunteer.nombreVol} - {volunteer.rutVoluntario}
+        </li>
+      ))}
+    </ul>
+    {filteredVolunteers.length > 10 && (
+      <p className="info-message">Mostrando los primeros 10 resultados.</p>
+    )}
+  </div>
+)}
+
+
+      {/* Formulario con datos del voluntario */}
+      <form onSubmit={handleSubmit}>
         <div className="input-container">
           <label htmlFor="nombreVol">Nombre</label>
           <input
             type="text"
             name="nombreVol"
             value={formData.nombreVol}
-            onChange={handleChange}
+            readOnly
             className="form-control"
           />
         </div>
@@ -161,7 +158,7 @@ export function BusquedaVoluntario() {
               type="date"
               name="fechaNac"
               value={formData.fechaNac}
-              onChange={handleChange}
+              readOnly
               className="form-control"
             />
           </div>
@@ -171,21 +168,10 @@ export function BusquedaVoluntario() {
               type="date"
               name="fechaIngreso"
               value={formData.fechaIngreso}
-              onChange={handleChange}
+              readOnly
               className="form-control"
             />
           </div>
-        </div>
-
-        <div className="input-container">
-          <label htmlFor="tipoSangre">Tipo de Sangre</label>
-          <input
-            type="text"
-            name="tipoSangre"
-            value={formData.tipoSangre}
-            onChange={handleChange}
-            className="form-control"
-          />
         </div>
 
         <div className="input-container">
@@ -209,54 +195,49 @@ export function BusquedaVoluntario() {
             className="form-control"
           />
         </div>
-
-        <div className="row">
-          <div className="input-container col-6">
-            <label htmlFor="claveRadial">Clave Radial</label>
+        <div>
+          {/*tipo de sangre*/}
+          <div className="input-container">
+            <label htmlFor="tipoSangre">Tipo de Sangre</label>
             <input
               type="text"
-              name="claveRadial"
-              value={formData.claveRadial}
+              name="tipoSangre"
+              placeholder=" "
+              value={formData.tipoSangre}
               onChange={handleChange}
               className="form-control"
             />
           </div>
-          <div className="input-container col-6">
-            <label htmlFor="cargoVoluntario">Cargo Voluntario</label>
+          {/*alergias*/}
+          <div className="input-container">
+            <label htmlFor="alergias">Alergias</label>
             <input
               type="text"
-              name="cargoVoluntario"
-              value={formData.cargoVoluntario}
+              name="alergias"
+              placeholder=" "
+              value={formData.alergias}
               onChange={handleChange}
               className="form-control"
             />
+            
+          </div>
+          {/*Enfermedades*/}
+          <div className="input-container">
+            <label htmlFor="enfermedades">Enfermedades</label>
+            <input
+              type="text"
+              name="enfermedades"
+              placeholder=" "
+              value={formData.enfermedades}
+              onChange={handleChange}
+              className="form-control"
+            />
+          
           </div>
         </div>
 
-        <div className="input-container">
-          <label htmlFor="alergias">Alergias</label>
-          <input
-            type="text"
-            name="alergias"
-            value={formData.alergias}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-
-        <div className="input-container">
-          <label htmlFor="enfermedades">Enfermedades</label>
-          <input
-            type="text"
-            name="enfermedades"
-            value={formData.enfermedades}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-
-        <button type="submit" className="submit-btn button button-save">
-          Actualizar
+        <button type="submit" className="button button-save">
+          Guardar
         </button>
       </form>
     </div>

@@ -26,6 +26,7 @@ import { EmergenciaList } from "./componentes/paginas/emergenciaList";
 import { BusquedaVoluntario } from "./componentes/paginas/busqueda";
 import { PerfilCreador } from "./componentes/paginas/perfilCreacion";
 import { RegistrarUsuario } from "./componentes/paginas/resgistroUsuario";
+import { ParteEmergenciaIncendio2 } from "./componentes/formularios/parteEmergenciaIncendio2";
 
 export function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -85,6 +86,10 @@ export function App() {
         <Route
           path="/peincendio"
           element={<ParteEmergenciaIncendio></ParteEmergenciaIncendio>}
+        ></Route>
+        <Route
+          path="/parte-emergencia-incendio2"
+          element={<ParteEmergenciaIncendio2></ParteEmergenciaIncendio2>}
         ></Route>
         <Route
           path="/perescate"
