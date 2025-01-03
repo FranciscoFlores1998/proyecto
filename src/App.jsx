@@ -27,6 +27,9 @@ import { BusquedaVoluntario } from "./componentes/paginas/busqueda";
 import { PerfilCreador } from "./componentes/paginas/perfilCreacion";
 import { RegistrarUsuario } from "./componentes/paginas/resgistroUsuario";
 import { ParteEmergenciaIncendio2 } from "./componentes/formularios/parteEmergenciaIncendio2";
+import { ParteEmergenciaOtros2 } from "./componentes/formularios/parteEmergenciaOtros2";
+import { ParteEmergenciaRescate2 } from "./componentes/formularios/parteEmergenciaRescate2";
+import { ParteEmergenciaMatPel2 } from "./componentes/formularios/parteEmergenciaMatPel2";
 
 export function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
