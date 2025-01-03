@@ -96,12 +96,16 @@ export function App() {
           element={<ParteEmergenciaRescate></ParteEmergenciaRescate>}
         ></Route>
         <Route
-          path="/pehazmat"
-          element={<ParteEmergenciaMatPel></ParteEmergenciaMatPel>}
+          path="/parte-emergencia-rescate2"
+          element={<ParteEmergenciaRescate2></ParteEmergenciaRescate2>}
         ></Route>
         <Route
-          path="/peotros"
-          element={<ParteEmergenciaOtros></ParteEmergenciaOtros>}
+          path="//parte-emergencia-matpel2"
+          element={<ParteEmergenciaMatPel2></ParteEmergenciaMatPel2>}
+        ></Route>
+        <Route
+          path="//parte-emergencia-otros2"
+          element={<ParteEmergenciaOtros2></ParteEmergenciaOtros2>}
         ></Route>
         <Route path="/perfil" element={<PerfilUsuario></PerfilUsuario>}></Route>
         <Route

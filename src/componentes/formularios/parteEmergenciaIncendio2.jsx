@@ -8,6 +8,7 @@ export function ParteEmergenciaIncendio2() {
   const navigate = useNavigate();
   const [error, setError] = useState({});
   const [formData, setFormData] = useState({
+    folioPEmergencia: null, // Agregado para almacenar el folio
     claveEmergencia: "",
     direccion: "",
     fechaEmergencia: "",
@@ -37,6 +38,7 @@ export function ParteEmergenciaIncendio2() {
     if (location.state) {
       setFormData((prevData) => ({
         ...prevData,
+        folioPEmergencia: location.state.folioPEmergencia || null,
         claveEmergencia: location.state.claveEmergencia || "",
         direccion: location.state.direccion || "",
         fechaEmergencia: location.state.fechaEmergencia || "",
@@ -98,10 +100,12 @@ export function ParteEmergenciaIncendio2() {
   const handleSave = async () => {
     // Validaciones
     const newErrors = {};
+    if (!formData.folioPEmergencia)
+      newErrors.folioPEmergencia = "El folio de la emergencia es obligatorio.";
     if (!formData.claveEmergencia)
-      newErrors.claveEmergencia = "La clave de emergencia es obligatoria";
+      newErrors.claveEmergencia = "La clave de emergencia es obligatoria.";
     if (!formData.direccion)
-      newErrors.direccion = "La dirección es obligatoria";
+      newErrors.direccion = "La dirección es obligatoria.";
 
     if (Object.keys(newErrors).length > 0) {
       setError(newErrors);
@@ -146,11 +150,16 @@ export function ParteEmergenciaIncendio2() {
         : [...prevData.moviles, movil],
     }));
   };
+
   return (
     <div className="form-container">
       <h2>Parte de Emergencia - Detalles Adicionales</h2>
       <div className="form-group row">
-        <div className="form-group col-3">
+        <div className="form-group col-2">
+          <label htmlFor="folioPEmergencia">Folio de la Emergencia</label>
+          <h3>{formData.folioPEmergencia}</h3>
+        </div>
+        <div className="form-group col-2">
           <label htmlFor="claveEmergencia">Clave de Emergencia</label>
           <h3>{formData.claveEmergencia}</h3>
         </div>
@@ -163,9 +172,9 @@ export function ParteEmergenciaIncendio2() {
           <h4>{formData.fechaEmergencia}</h4>
         </div>
       </div>
-
-      {/*INSTITUCION*/}
-      <div className="form-container row">
+      {/* Continuar con el resto de las secciones como "instituciones", "inmuebles", etc. */}
+{/*INSTITUCION*/}
+<div className="form-container row">
         <h2>Instituciones asistentes a la emergencia</h2>
         {formData.instituciones.map((institucion, index) => (
           <>
@@ -384,9 +393,7 @@ export function ParteEmergenciaIncendio2() {
                 value={materialesP.llamarEmpresaQuimica}
                 onChange={(e) => handleChange(e, index, "materialesPs")}
               >
-                <option value="">
-                  ¿Fue necesario llamar a una empresa química?
-                </option>
+                <option value="">¿Fue necesario llamar a una empresa química?</option>
                 <option value={true}>Sí</option>
                 <option value={false}>No</option>
               </select>
@@ -459,7 +466,7 @@ export function ParteEmergenciaIncendio2() {
       </div>
       {/*MOVIL*/}
       <div className="form-container">
-        <h2>Móviles asistentes</h2>
+        <h2>MOVILES asistentes</h2>
         <div className="button-option-group">
           {["Movil1", "Movil2", "Movil3"].map((movil) => (
             <button
@@ -474,8 +481,6 @@ export function ParteEmergenciaIncendio2() {
           ))}
         </div>
       </div>
-
-      {/* Botones de acción */}
       <div className="form-actions">
         <button className="button button-save" onClick={handleSave}>
           Guardar

@@ -81,14 +81,18 @@ export function ParteEmergenciaIncendio() {
         throw new Error("Error al guardar la emergencia.");
       }
 
+      const data = await response.json(); // Respuesta con el folioPEmergencia
+      const { folioPEmergencia } = data;
+
       alert("Emergencia registrada exitosamente.");
-      
+
       // Navegar a la segunda parte, pasando datos relevantes
       navigate("/parte-emergencia-incendio2", {
         state: {
           claveEmergencia: formData.claveEmergencia,
           direccion: formData.direccion,
           fechaEmergencia: formData.fechaEmergencia,
+          folioPEmergencia, // Agregar folioPEmergencia
         },
       });
     } catch (err) {
