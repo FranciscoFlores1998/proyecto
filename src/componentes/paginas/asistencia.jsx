@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchableInput } from "./SearchableInput";
+import API_BASE_URL from "../../apiConfig"; // Asegúrate de tener esta configuración
 
 const allVolunteers = [
   { id: 1, nombre: "Juan Pérez", rut: "12345678-9", claveRadial: "41" },
@@ -20,19 +21,20 @@ const allVolunteers = [
 export function Asistencia() {
   const navigate = useNavigate();
   const [error, setError] = useState({});
+  const [backendError, setBackendError] = useState(null);
   const [selectedVolunteers, setSelectedVolunteers] = useState([]);
   const [formData, setFormData] = useState({
     tipoLlamado: "",
     aCargoDelCuerpo: "",
-    oficialEmergencia: "",
-    fechaEmergencia: "",
+    aCargoDeLaCompania: "",
+    fechaAsistencia: "",
     horaInicio: "",
     horaFin: "",
-    direccion: "",
-    observacion: "",
-    moviles: [],
+    direccionAsistencia: "",
+    observaciones: "",
+    idMovil: [], // Asegúrate de usar este nombre en todo el componente
   });
-
+  
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -42,26 +44,60 @@ export function Asistencia() {
     if (value) setError((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const newErrors = {};
     const requiredFields = [
-      "direccion",
-      "fechaEmergencia",
+      "direccionAsistencia",
+      "fechaAsistencia",
       "horaInicio",
-      "oficialEmergencia",
+      "aCargoDeLaCompania",
       "aCargoDelCuerpo",
-      "observacion",
+      "observaciones",
     ];
     requiredFields.forEach((field) => {
-      if (!formData[field])
+      if (!formData[field]) {
         newErrors[field] = `El campo ${field} es obligatorio`;
+      }
     });
+
     if (Object.keys(newErrors).length > 0) {
       setError(newErrors);
     } else {
       setError({});
+      try {
+        const response = await fetch(`${API_BASE_URL}/parte-asistencia/crear`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tipoLlamado: formData.tipoLlamado,
+            aCargoDelCuerpo: formData.aCargoDelCuerpo,
+            aCargoDeLaCompania: formData.aCargoDeLaCompania,
+            fechaAsistencia: formData.fechaAsistencia,
+            horaInicio: formData.horaInicio,
+            horaFin: formData.horaFin,
+            direccionAsistencia: formData.direccionAsistencia,
+            totalAsistencia: selectedVolunteers.length,
+            observaciones: formData.observaciones,
+            idMovil: formData.idMovil[0] || null,
+          }),
+        });
+    
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Error al guardar la asistencia.");
+        }
+    
+        alert("Asistencia guardada exitosamente.");
+        navigate("/parte-asistencia");
+      } catch (err) {
+        setBackendError(err.message); // Guarda el error en el estado
+      }
+    };
     }
   };
+
   const handleCancel = () => {
     navigate("/inicio");
   };
@@ -69,9 +105,9 @@ export function Asistencia() {
   const handleMovilToggle = (movil) => {
     setFormData((prev) => ({
       ...prev,
-      moviles: prev.moviles.includes(movil)
-        ? prev.moviles.filter((m) => m !== movil)
-        : [...prev.moviles, movil],
+      idMovil: prev.idMovil.includes(movil)
+        ? prev.idMovil.filter((m) => m !== movil)
+        : [...prev.idMovil, movil],
     }));
   };
 
@@ -95,6 +131,7 @@ export function Asistencia() {
     <div className="form-container">
       <div className="form-container row">
         <h2>Información general</h2>
+        {/* Formulario de asistencia */}
         <div className="form-group col-3">
           <label htmlFor="tipoLlamado">Acto de servicio</label>
           <select
@@ -140,16 +177,16 @@ export function Asistencia() {
           )}
         </div>
         <div className="form-group col-6">
-          <label htmlFor="oficialEmergencia">Oficial a cargo</label>
+          <label htmlFor="aCargoDeLaCompania">Oficial a cargo</label>
           <input
-            id="oficialEmergencia"
-            name="oficialEmergencia"
+            id="aCargoDeLaCompania"
+            name="aCargoDeLaCompania"
             placeholder="Indique oficial a cargo"
-            value={formData.oficialEmergencia}
+            value={formData.aCargoDeLaCompania}
             onChange={handleChange}
           />
           {error.oficialEmergencia && (
-            <p className="error-message">{error.oficialEmergencia}</p>
+            <p className="error-message">{error.aCargoDeLaCompania}</p>
           )}
         </div>
         <div className="form-group col-4">
@@ -176,41 +213,41 @@ export function Asistencia() {
           />
         </div>
         <div className="form-group col-4">
-          <label htmlFor="fechaEmergencia">Fecha</label>
+          <label htmlFor="fechaAsistencia">Fecha</label>
           <input
-            id="fechaEmergencia"
-            name="fechaEmergencia"
+            id="fechaAsistencia"
+            name="fechaAsistencia"
             type="date"
-            value={formData.fechaEmergencia}
+            value={formData.fechaAsistencia}
             onChange={handleChange}
           />
           {error.fechaEmergencia && (
-            <p className="error-message">{error.fechaEmergencia}</p>
+            <p className="error-message">{error.fechaAsistencia}</p>
           )}
         </div>
         <div className="form-group col-6">
-          <label htmlFor="direccion">Dirección</label>
+          <label htmlFor="direccionAsistencia">Dirección</label>
           <input
-            id="direccion"
-            name="direccion"
+            id="direccionAsistencia"
+            name="direccionAsistencia"
             placeholder="Indique dirección"
-            value={formData.direccion}
+            value={formData.direccionAsistencia}
             onChange={handleChange}
           />
           {error.direccion && (
-            <p className="error-message">{error.direccion}</p>
+            <p className="error-message">{error.direccionAsistencia}</p>
           )}
         </div>
         <div className="form-group col-6">
-          <label htmlFor="observacion">Observaciones</label>
+          <label htmlFor="observaciones">Observaciones</label>
           <textarea
-            name="observacion"
+            name="observaciones"
             placeholder="Indique la observación"
-            value={formData.observacion}
+            value={formData.observaciones}
             onChange={handleChange}
           ></textarea>
           {error.observacion && (
-            <p className="error-message">{error.observacion}</p>
+            <p className="error-message">{error.observaciones}</p>
           )}
         </div>
       </div>
@@ -229,39 +266,14 @@ export function Asistencia() {
               selectedVolunteers={selectedVolunteers}
             />
           </div>
-          <div className="form-group col-4">
-            <label htmlFor="busquedaClaveRadial">
-              Búsqueda por CLAVE RADIAL
-            </label>
-            <SearchableInput
-              placeholder="Buscar por clave radial"
-              data={allVolunteers}
-              onSelect={handleSelectVolunteer}
-              searchKeys={["claveRadial"]}
-              selectedVolunteers={selectedVolunteers}
-            />
-          </div>
         </div>
-
-        <div className="form-container selected-volunteers ">
-          <h3>Voluntarios asistentes </h3>
+        <div className="form-container selected-volunteers">
+          <h3>Voluntarios asistentes</h3>
           {sortedVolunteers.length > 0 ? (
             <ul>
               {sortedVolunteers.map((volunteer) => (
-                <li className="row" key={volunteer.id} style={{ padding: 2 }}>
-                  <div className="col-4 " style={{ gap: 10 }}>
-                    {volunteer.nombre} - {volunteer.rut}
-                  </div>
-                  <div className="col-1 text-center">
-                    {" "}
-                    {volunteer.claveRadial}
-                  </div>
-                  <button
-                    className="button button-delete col-auto"
-                    onClick={() => handleRemoveVolunteer(volunteer.id)}
-                  >
-                    Eliminar
-                  </button>
+                <li key={volunteer.id}>
+                  {volunteer.nombre} - {volunteer.rut}
                 </li>
               ))}
             </ul>
@@ -271,38 +283,14 @@ export function Asistencia() {
         </div>
       </div>
 
-      <div className="form-container">
-        <h2>Móviles asistentes</h2>
-        <div className="button-option-group">
-          {["Movil1", "Movil2", "Movil3"].map((movil) => (
-            <button
-              key={movil}
-              className={`button-option ${
-                formData.moviles.includes(movil) ? "active" : ""
-              }`}
-              onClick={() => handleMovilToggle(movil)}
-            >
-              {movil}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Botones de acción */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "1rem",
-        }}
-      >
+      <div>
         <button className="button button-save" onClick={handleSave}>
           Guardar
         </button>
         <button className="button button-delete" onClick={handleCancel}>
           Cancelar
         </button>
-        
       </div>
     </div>
   );
